@@ -25,13 +25,13 @@ namespace job_search_be.Api.Infrastructure.Middleware
                 await _next(httpContext);
                 if (httpContext.Response is HttpResponse forbiddenResponse && forbiddenResponse.StatusCode == 403)
                 {
-                    await forbiddenResponse.WriteAsJsonAsync(new ErrorResponse(forbiddenResponse.StatusCode, "Permission denied"));
+                    await forbiddenResponse.WriteAsJsonAsync(new ErrorResponse(forbiddenResponse.StatusCode, "Không có quyền thực hiện"));
                 }
                 else if (httpContext.Response is HttpResponse unauthorizedResponse && unauthorizedResponse.StatusCode == 401)
                 {
                     await unauthorizedResponse.WriteAsJsonAsync(new ErrorResponse(unauthorizedResponse.StatusCode, httpContext.Request.Headers.ContainsKey("Authorization")
-                                            ? "Bad credentials"
-                                            : "Unauthentication"));
+                                            ? "Token hết hiệu lực"
+                                            : "Chưa xác thực"));
                 }
             }
             catch (Exception e)

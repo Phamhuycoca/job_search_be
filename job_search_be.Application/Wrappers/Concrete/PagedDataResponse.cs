@@ -12,13 +12,13 @@ namespace job_search_be.Application.Wrappers.Concrete
         public bool Success { get; } = true;
         public int TotalItems { get; }
 
-        public List<T> Data { get; }
+        public List<T> Items { get; }
 
         public int StatusCode { get; }
 
         public PagedDataResponse(List<T> data, int statuscode, int totalitems)
         {
-            Data = data;
+            Items = data;
             StatusCode = statuscode;
             TotalItems = totalitems;
         }

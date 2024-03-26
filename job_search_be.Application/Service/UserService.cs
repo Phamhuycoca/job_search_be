@@ -68,7 +68,7 @@ namespace job_search_be.Application.Service
                 query = query.Where(x => x.FullName.Contains(commonList.keyword)).ToList();
             }
             var paginatedResult = PaginatedList<UserQuery>.ToPageList(query, commonList.page, commonList.limit);
-            return new PagedDataResponse<UserQuery>(paginatedResult, 200, paginatedResult.Count());
+            return new PagedDataResponse<UserQuery>(paginatedResult, 200, query.Count());
 
         }
 

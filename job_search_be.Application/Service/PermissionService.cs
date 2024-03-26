@@ -61,7 +61,7 @@ namespace job_search_be.Application.Service
                 query = query.Where(x => x.PermissionName.Contains(commonListQuery.keyword)).ToList();
             }
             var paginatedResult = PaginatedList<PermissionQuery>.ToPageList(query, commonListQuery.page, commonListQuery.limit);
-            return new PagedDataResponse<PermissionQuery>(paginatedResult, 200, paginatedResult.Count());
+            return new PagedDataResponse<PermissionQuery>(paginatedResult, 200,query.Count());
 
         }
 

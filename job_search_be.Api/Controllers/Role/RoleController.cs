@@ -30,7 +30,7 @@ namespace job_search_be.Api.Controllers.Role
             return Ok(_roleService.Create(dto));
         }
 
-        [HttpPut("${id}")]
+        [HttpPatch("{id}")]
         public IActionResult Update(RoleDto dto)
         {
             return Ok(_roleService.Update(dto));
@@ -40,6 +40,11 @@ namespace job_search_be.Api.Controllers.Role
         public IActionResult Delete(Guid id)
         {
             return Ok(_roleService?.Delete(id));
+        }
+        [HttpGet("{id}")]
+        public IActionResult GetById(Guid id)
+        {
+            return Ok(_roleService.GetById(id));
         }
     }
 }

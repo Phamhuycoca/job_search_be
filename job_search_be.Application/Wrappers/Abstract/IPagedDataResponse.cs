@@ -9,6 +9,6 @@ namespace job_search_be.Application.Wrappers.Abstract
     public interface IPagedDataResponse<T> : IResponse
     {
         int TotalItems { get; }
-        List<T> Data { get; }
+        List<T> Items { get; }
     }
 }

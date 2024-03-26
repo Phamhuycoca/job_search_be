@@ -31,6 +31,7 @@ namespace job_search_be.Infrastructure.Settings
     }
     public static class HttpStatusMessages
     {
+        public static string OK => "Thành công";
         public static string AddedSuccesfully => "Thêm mới thông tin thành công";
         public static string AddedError => "Thêm mới thông tin không thành công";
         public static string UpdatedSuccessfully => "Cập nhập thông tin thành công";
@@ -42,6 +43,10 @@ namespace job_search_be.Infrastructure.Settings
         public static string RefreshTokenNotFound => "Refresh Token không tìm thấy";
         public static string RefreshTokenExpired => "Refresh Token đã hết hạn";
         public static string BadRequest => "Không thể hiển thị danh sách";
- 
+        public static string Forbidden => "Không có quyền thực hiện";
+
+
+
+
     }
 }

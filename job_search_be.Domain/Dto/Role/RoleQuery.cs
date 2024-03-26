@@ -13,5 +13,7 @@ namespace job_search_be.Domain.Dto.Role
         public string? RoleName { get; set; }
         public string? RoleDescription { get; set; }
         public string? PermissionId { get; set; }
+        public string? PermissionName { get; set; }
+
     }
 }

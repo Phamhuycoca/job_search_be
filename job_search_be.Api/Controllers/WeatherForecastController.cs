@@ -5,6 +5,7 @@ using job_search_be.Infrastructure.Enum;
 using job_search_be.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace job_search_be.Api.Controllers
 {
@@ -24,7 +25,7 @@ namespace job_search_be.Api.Controllers
             _logger = logger;
         }
         [Authorize]
-        [HasPermission(Permission.List)]
+        [HasPermission(Permission.Modify)]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -36,10 +37,12 @@ namespace job_search_be.Api.Controllers
             })
             .ToArray();
         }
+        [HasPermission(Permission.Modify)]
         [HttpGet("Users")]
         public IActionResult GetUser([FromQuery] CommonListQuery query)
         {
-                return Ok(query);
+              var userId =HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+              return Ok(userId);
            
         }
         [HttpGet("Hello")]

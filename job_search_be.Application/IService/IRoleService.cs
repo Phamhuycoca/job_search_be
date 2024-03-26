@@ -15,5 +15,6 @@ namespace job_search_be.Application.IService
         DataResponse<RoleQuery> Create(RoleDto dto);
         DataResponse<RoleQuery> Update(RoleDto dto);
         DataResponse<RoleQuery> Delete(Guid id);
+        DataResponse<RoleQuery> GetById(Guid id);
     }
 }
