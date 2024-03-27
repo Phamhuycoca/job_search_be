@@ -21,5 +21,6 @@ namespace job_search_be.Domain.Dto.User
         public Guid? RoleId { get; set; }
         public bool? Is_Active { get; set; }=false;
         public IFormFile? file { get; set; }
+        public string? imageDelete {  get; set; }
     }
 }

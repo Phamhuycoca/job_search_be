@@ -15,6 +15,8 @@ namespace job_search_be.Infrastructure.Context
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Refresh_Token> RefreshTokens { get; set; }
+        public virtual DbSet<Formofwork> Formofworks { get; set; }
+        public virtual DbSet<Workexperience> Workexperiences { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -39,6 +41,16 @@ namespace job_search_be.Infrastructure.Context
                 e.ToTable("RefreshTokens");
                 e.HasKey(e => e.UserId);
                 e.HasOne(e => e.User).WithMany(e => e.Refresh_Tokens).HasForeignKey(e => e.UserId).OnDelete(DeleteBehavior.ClientSetNull);
+            });
+            modelBuilder.Entity<Formofwork>(e =>
+            {
+                e.ToTable("Formofworks");
+                e.HasKey(e => e.FormofworkId);
+            });
+            modelBuilder.Entity<Workexperience>(e =>
+            {
+                e.ToTable("Workexperiences");
+                e.HasKey(e => e.WorkexperienceId);
             });
         }
     }

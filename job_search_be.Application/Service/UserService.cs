@@ -105,6 +105,10 @@ namespace job_search_be.Application.Service
             {
                 throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
             }
+            if (dto.imageDelete != null)
+            {
+                upload.DeleteImage(dto.imageDelete);
+            }
             if (dto.file != null)
             {
                 if(item.Avatar != null)

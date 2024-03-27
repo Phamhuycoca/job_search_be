@@ -29,6 +29,7 @@ namespace job_search_be.Application.Module
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IFormofworkService, FormofworkService>();
             return services;
         }
     }

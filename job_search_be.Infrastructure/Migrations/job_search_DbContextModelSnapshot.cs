@@ -22,6 +22,38 @@ namespace job_search_be.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Formofwork", b =>
+                {
+                    b.Property<Guid>("FormofworkId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FormofworkName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FormofworkId");
+
+                    b.ToTable("Formofworks", (string)null);
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Permission", b =>
                 {
                     b.Property<string>("PermissionId")
@@ -184,6 +216,38 @@ namespace job_search_be.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Workexperience", b =>
+                {
+                    b.Property<Guid>("WorkexperienceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("WorkexperienceName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("WorkexperienceId");
+
+                    b.ToTable("Workexperiences", (string)null);
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Refresh_Token", b =>
