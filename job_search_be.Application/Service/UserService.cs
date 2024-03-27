@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet;
 using job_search_be.Application.Helpers;
 using job_search_be.Application.IService;
 using job_search_be.Application.Wrappers.Concrete;
@@ -10,6 +11,7 @@ using job_search_be.Domain.Repositories;
 using job_search_be.Infrastructure.Exceptions;
 using job_search_be.Infrastructure.Repositories;
 using job_search_be.Infrastructure.Settings;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,17 +27,24 @@ namespace job_search_be.Application.Service
         public readonly IMapper _mapper;
         private readonly IRoleRepository _roleRepository;
         private readonly IPermissionRepository _permissionRepository;
-        public UserService(IUserRepository userRepository, IMapper mapper, IRoleRepository roleRepository, IPermissionRepository permissionRepository)
+        private readonly Cloudinary _cloudinary;
+        public UserService(IUserRepository userRepository, IMapper mapper, IRoleRepository roleRepository, IPermissionRepository permissionRepository,Cloudinary cloudinary)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _roleRepository = roleRepository;
             _permissionRepository = permissionRepository;
+            _cloudinary = cloudinary;
         }
         public DataResponse<UserQuery> Create(UserDto dto)
         {
+            UpLoadImage upload = new UpLoadImage(_cloudinary);
             dto.UserId = Guid.NewGuid();
-            dto.Password = PasswordHelper.CreateHashedPassword(dto.Password);
+            dto.Password = PasswordHelper.CreateHashedPassword(dto.Password="12345678a");
+            if (dto.file != null)
+            {
+                dto.Avatar=upload.ImageUpload(dto.file);
+            }
             var newData = _userRepository.Create(_mapper.Map<User>(dto));
             if (newData != null)
             {
@@ -46,10 +55,16 @@ namespace job_search_be.Application.Service
 
         public DataResponse<UserQuery> Delete(Guid id)
         {
+            UpLoadImage upload = new UpLoadImage(_cloudinary);
+
             var item = _userRepository.GetById(id);
             if (item == null)
             {
                 throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            if (item.Avatar != null)
+            {
+                upload.DeleteImage(item.Avatar);
             }
             var data = _userRepository.Delete(id);
             if (data != null)
@@ -62,10 +77,20 @@ namespace job_search_be.Application.Service
         public PagedDataResponse<UserQuery> Items(CommonListQuery commonList)
         {
             var query = _mapper.Map<List<UserQuery>>(_userRepository.GetAllData());
-
             if (!string.IsNullOrEmpty(commonList.keyword))
             {
-                query = query.Where(x => x.FullName.Contains(commonList.keyword)).ToList();
+                query = query.Where(x =>
+                    x.FullName.Contains(commonList.keyword) ||
+                    x.Email.Contains(commonList.keyword)
+                ).ToList();
+            }
+            foreach (var item in query)
+            {
+                    var permission = _roleRepository.GetById(item.RoleId ?? Guid.Empty);
+                    if (permission != null)
+                    {
+                        item.RoleName= permission.RoleName;
+                    }
             }
             var paginatedResult = PaginatedList<UserQuery>.ToPageList(query, commonList.page, commonList.limit);
             return new PagedDataResponse<UserQuery>(paginatedResult, 200, query.Count());
@@ -74,10 +99,19 @@ namespace job_search_be.Application.Service
 
         public DataResponse<UserQuery> Update(UserDto dto)
         {
+            UpLoadImage upload = new UpLoadImage(_cloudinary);
             var item = _userRepository.GetById(dto.UserId);
             if (item == null)
             {
                 throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            if (dto.file != null)
+            {
+                if(item.Avatar != null)
+                {
+                    upload.DeleteImage(item.Avatar);
+                }
+                dto.Avatar = upload.ImageUpload(dto.file);
             }
             var newData = _userRepository.Update(_mapper.Map(dto, item));
             if (newData != null)

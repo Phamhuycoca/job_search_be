@@ -2,6 +2,7 @@
 using job_search_be.Application.Wrappers.Concrete;
 using job_search_be.Domain.Dto.User;
 using job_search_be.Domain.Entity;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
-﻿using job_search_be.Api.Infrastructure.Extensions;
+﻿using CloudinaryDotNet;
+using job_search_be.Api.Infrastructure.Extensions;
 using job_search_be.Application.Helpers;
 using job_search_be.Application.Module;
 using job_search_be.Infrastructure.Context;
@@ -73,82 +74,21 @@ builder.Services.AddAuthorization();
 //ConnectStrings
 builder.Services.AddDbContext<job_search_DbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("job_Context")));
+
+//Cloudinary
+IConfiguration configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+var cloudinaryAccount = new Account(
+    configuration["Cloudinary:CloudName"],
+    configuration["Cloudinary:ApiKey"],
+    configuration["Cloudinary:ApiSecret"]
+);
+var cloudinary = new Cloudinary(cloudinaryAccount);
+builder.Services.AddSingleton(cloudinary);
 var app = builder.Build();
-
-
-
-// Seed data
-/*using (var scope = app.Services.CreateScope())
-{
-    try
-    {
-        var services = scope.ServiceProvider;
-        var dbContext = services.GetRequiredService<job_search_DbContext>();
-
-        await dbContext.Database.MigrateAsync();
-
-        if (!dbContext.Roles.Any())
-        {
-            List<Role> roles = new List<Role> 
-            {
-                new Role {RoleId=Guid.NewGuid(),NameRole="SuperAdmin"},
-                new Role {RoleId=Guid.NewGuid(),NameRole="Nhân viên"},
-                new Role {RoleId=Guid.NewGuid(),NameRole="Nhà tuyển dụng"},
-                new Role {RoleId=Guid.NewGuid(),NameRole="Người dùng"},
-            };
-            await dbContext.Roles.AddRangeAsync(roles);
-            await dbContext.SaveChangesAsync();
-        }
-
-
-
-        List<Permission> permissions = new List<Permission>
-        {
-            new Permission { PermissionId = Guid.NewGuid(), Name = "Read" },
-            new Permission { PermissionId = Guid.NewGuid(), Name = "List" },
-            new Permission { PermissionId = Guid.NewGuid(), Name = "Write" },
-            new Permission { PermissionId = Guid.NewGuid(), Name = "Modify" },
-            new Permission { PermissionId = Guid.NewGuid(), Name = "Delete" }
-        };
-        if (!dbContext.Permissions.Any())
-        {
-            await dbContext.Permissions.AddRangeAsync(permissions);
-            await dbContext.SaveChangesAsync();
-        }
-
-        if (!dbContext.Users.Any())
-        {
-            DateTime now = DateTime.Now;
-            string password = "12345678a";
-
-            await dbContext.Users.AddAsync(
-                new User
-                {
-                    createdAt = DateTime.Now,
-                    FullName = "Phạm Khắc Huy",
-                    Email = "Phamkhachuy240702@gmail.com",
-                    Gender = "Nam",
-                    PassWord = PasswordHelper.CreateHashedPassword(password),
-                    Address = "Hải phòng",
-                    Avatar = "https://res.cloudinary.com/drhdgw1xx/image/upload/v1709880283/m76gmmyuzzv3phiyuy2u.jpg",
-                    PhoneNumber = "0325472224",
-                    Is_Active = false,
-                }
-            );
-            await dbContext.SaveChangesAsync();
-        }
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"An error occurred: {ex.Message}");
-        throw new ApiException(400, $"An error occurred: {ex.Message}");
-    }
-}
-
-*/
-
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

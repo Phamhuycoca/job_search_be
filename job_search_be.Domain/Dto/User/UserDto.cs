@@ -1,4 +1,5 @@
 ﻿using job_search_be.Domain.BaseModel;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,6 @@ namespace job_search_be.Domain.Dto.User
         public string? Avatar { get; set; }
         public Guid? RoleId { get; set; }
         public bool? Is_Active { get; set; }=false;
+        public IFormFile? file { get; set; }
     }
 }

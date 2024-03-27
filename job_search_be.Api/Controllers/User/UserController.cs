@@ -23,13 +23,13 @@ namespace job_search_be.Api.Controllers.User
         }
 
         [HttpPost]
-        public IActionResult Create(UserDto dto)
+        public IActionResult Create([FromForm]UserDto dto)
         {
             return Ok(_userService.Create(dto));
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(UserDto dto)
+        [HttpPatch("{id}")]
+        public IActionResult Update([FromForm] UserDto dto)
         {            
             return Ok(_userService.Update(dto));
         }

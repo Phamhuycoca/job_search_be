@@ -17,6 +17,7 @@ namespace job_search_be.Domain.Dto.User
         public string? PhoneNumber { get; set; }
         public string? Avatar { get; set; }
         public Guid? RoleId { get; set; }
+        public string? RoleName { get; set; }
         public bool? Is_Active { get; set; }
     }
 }
