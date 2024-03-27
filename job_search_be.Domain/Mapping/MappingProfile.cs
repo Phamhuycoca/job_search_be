@@ -4,6 +4,7 @@ using job_search_be.Domain.Dto.Formofwork;
 using job_search_be.Domain.Dto.Permission;
 using job_search_be.Domain.Dto.Role;
 using job_search_be.Domain.Dto.User;
+using job_search_be.Domain.Dto.Workexperience;
 using job_search_be.Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,9 @@ namespace job_search_be.Domain.Mapping
 
             CreateMap<Formofwork, FormofworkDto>().ReverseMap();
             CreateMap<Formofwork, FormofworkQuery>().ReverseMap();
+
+            CreateMap<Workexperience, WorkexperienceDto>().ReverseMap();
+            CreateMap<Workexperience,WorkexperienceQuery>().ReverseMap();
         }
     }
 }
