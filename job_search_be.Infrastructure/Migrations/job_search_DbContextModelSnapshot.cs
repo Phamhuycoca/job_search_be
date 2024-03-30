@@ -22,6 +22,105 @@ namespace job_search_be.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.City", b =>
+                {
+                    b.Property<Guid>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CityId");
+
+                    b.ToTable("Cities", (string)null);
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Employers", b =>
+                {
+                    b.Property<Guid>("EmployersId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CompanyAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyLogo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyWebsite")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("IsStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("EmployersId");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Employers", (string)null);
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Formofwork", b =>
                 {
                     b.Property<Guid>("FormofworkId")
@@ -52,6 +151,78 @@ namespace job_search_be.Infrastructure.Migrations
                     b.HasKey("FormofworkId");
 
                     b.ToTable("Formofworks", (string)null);
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Job", b =>
+                {
+                    b.Property<Guid>("JobId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AddressJob")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BenefitsJob")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmployersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FormofworkId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("JobDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestJob")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SalaryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("WorkexperienceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("WorkingTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("JobId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("EmployersId");
+
+                    b.HasIndex("FormofworkId");
+
+                    b.HasIndex("SalaryId");
+
+                    b.HasIndex("WorkexperienceId");
+
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Permission", b =>
@@ -160,6 +331,38 @@ namespace job_search_be.Infrastructure.Migrations
                     b.ToTable("Roles", (string)null);
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Salary", b =>
+                {
+                    b.Property<Guid>("SalaryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SalaryPrice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SalaryId");
+
+                    b.ToTable("Salaries", (string)null);
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.User", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -250,6 +453,53 @@ namespace job_search_be.Infrastructure.Migrations
                     b.ToTable("Workexperiences", (string)null);
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Employers", b =>
+                {
+                    b.HasOne("job_search_be.Domain.Entity.City", "City")
+                        .WithMany("Employers")
+                        .HasForeignKey("CityId");
+
+                    b.Navigation("City");
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Job", b =>
+                {
+                    b.HasOne("job_search_be.Domain.Entity.City", "City")
+                        .WithMany("Jobs")
+                        .HasForeignKey("CityId")
+                        .IsRequired();
+
+                    b.HasOne("job_search_be.Domain.Entity.Employers", "Employers")
+                        .WithMany("Jobs")
+                        .HasForeignKey("EmployersId")
+                        .IsRequired();
+
+                    b.HasOne("job_search_be.Domain.Entity.Formofwork", "Formofwork")
+                        .WithMany("Jobs")
+                        .HasForeignKey("FormofworkId")
+                        .IsRequired();
+
+                    b.HasOne("job_search_be.Domain.Entity.Salary", "Salary")
+                        .WithMany("Jobs")
+                        .HasForeignKey("SalaryId")
+                        .IsRequired();
+
+                    b.HasOne("job_search_be.Domain.Entity.Workexperience", "Workexperience")
+                        .WithMany("Jobs")
+                        .HasForeignKey("WorkexperienceId")
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Employers");
+
+                    b.Navigation("Formofwork");
+
+                    b.Navigation("Salary");
+
+                    b.Navigation("Workexperience");
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Refresh_Token", b =>
                 {
                     b.HasOne("job_search_be.Domain.Entity.User", "User")
@@ -269,14 +519,41 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.City", b =>
+                {
+                    b.Navigation("Employers");
+
+                    b.Navigation("Jobs");
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Employers", b =>
+                {
+                    b.Navigation("Jobs");
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Formofwork", b =>
+                {
+                    b.Navigation("Jobs");
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Role", b =>
                 {
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Salary", b =>
+                {
+                    b.Navigation("Jobs");
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.User", b =>
                 {
                     b.Navigation("Refresh_Tokens");
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Workexperience", b =>
+                {
+                    b.Navigation("Jobs");
                 });
 #pragma warning restore 612, 618
         }

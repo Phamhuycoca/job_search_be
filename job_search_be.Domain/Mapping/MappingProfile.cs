@@ -3,6 +3,7 @@ using job_search_be.Domain.Dto.Auth;
 using job_search_be.Domain.Dto.Formofwork;
 using job_search_be.Domain.Dto.Permission;
 using job_search_be.Domain.Dto.Role;
+using job_search_be.Domain.Dto.Salary;
 using job_search_be.Domain.Dto.User;
 using job_search_be.Domain.Dto.Workexperience;
 using job_search_be.Domain.Entity;
@@ -35,6 +36,10 @@ namespace job_search_be.Domain.Mapping
 
             CreateMap<Workexperience, WorkexperienceDto>().ReverseMap();
             CreateMap<Workexperience,WorkexperienceQuery>().ReverseMap();
+
+            CreateMap<Salary,SalaryDto>().ReverseMap();
+            CreateMap<Salary,SalaryQuery>().ReverseMap();
+
         }
     }
 }

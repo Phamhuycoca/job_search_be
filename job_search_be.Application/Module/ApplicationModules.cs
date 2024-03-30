@@ -31,6 +31,7 @@ namespace job_search_be.Application.Module
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IFormofworkService, FormofworkService>();
             services.AddScoped<IWorkexperienceService, WorkexperienceService>();
+            services.AddScoped<ISalaryService, SalaryService>();
             return services;
         }
     }

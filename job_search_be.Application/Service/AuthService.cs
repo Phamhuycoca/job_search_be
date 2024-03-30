@@ -72,16 +72,16 @@ namespace job_search_be.Application.Service
             var existRefreshToken = _refreshTokenRepository.GetAllData().Where(x => x.RefreshToken == token.Refresh_Token).FirstOrDefault();
             if (existRefreshToken == null)
             {
-                throw new ApiException(404, "Refresh Token Not Found");
+                throw new ApiException(404, "Refresh Token không hợp lệ");
             }
             var user = _userRepository.GetById(existRefreshToken.UserId);
             if (user == null)
             {
-                throw new ApiException(404, "User Not Found");
+                throw new ApiException(404, "Thông tin người dùng không tồn tại");
             }
             if (existRefreshToken.Refresh_TokenExpires < DateTime.Now)
             {
-                throw new ApiException(404, "Refresh Token Expired");
+                throw new ApiException(404, "Refresh Token hết hạn");
             }
             var roles = _roleRepository.GetAllData().Where(x => x.RoleId == user.UserId);
             List<string> roleNames = new List<string>();

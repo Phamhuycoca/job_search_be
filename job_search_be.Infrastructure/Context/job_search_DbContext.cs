@@ -17,6 +17,10 @@ namespace job_search_be.Infrastructure.Context
         public virtual DbSet<Refresh_Token> RefreshTokens { get; set; }
         public virtual DbSet<Formofwork> Formofworks { get; set; }
         public virtual DbSet<Workexperience> Workexperiences { get; set; }
+        public virtual DbSet<Salary> Salaries { get; set; }
+        public virtual DbSet<Employers> Employers { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Job> Jobs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -51,6 +55,32 @@ namespace job_search_be.Infrastructure.Context
             {
                 e.ToTable("Workexperiences");
                 e.HasKey(e => e.WorkexperienceId);
+            });
+            modelBuilder.Entity<Salary>(e =>
+            {
+                e.ToTable("Salaries");
+                e.HasKey(e => e.SalaryId);
+            });
+            modelBuilder.Entity<Employers>(e =>
+            {
+                e.ToTable("Employers");
+                e.HasKey(e => e.EmployersId);
+                e.HasOne(e=>e.City).WithMany(e=>e.Employers).HasForeignKey(e => e.CityId).OnDelete(DeleteBehavior.ClientSetNull);
+            });
+            modelBuilder.Entity<City>(e =>
+            {
+                e.ToTable("Cities");
+                e.HasKey(e => e.CityId);
+            });
+            modelBuilder.Entity<Job>(e =>
+            {
+                e.ToTable("Jobs");
+                e.HasKey(e => e.JobId);
+                e.HasOne(e => e.Workexperience).WithMany(e => e.Jobs).HasForeignKey(e => e.WorkexperienceId).OnDelete(DeleteBehavior.ClientSetNull);
+                e.HasOne(e=>e.Salary).WithMany(e=> e.Jobs).HasForeignKey(e=>e.SalaryId).OnDelete(DeleteBehavior.ClientSetNull);
+                e.HasOne(e => e.City).WithMany(e => e.Jobs).HasForeignKey(e => e.CityId).OnDelete(DeleteBehavior.ClientSetNull);
+                e.HasOne(e => e.Formofwork).WithMany(e => e.Jobs).HasForeignKey(e => e.FormofworkId).OnDelete(DeleteBehavior.ClientSetNull);
+                e.HasOne(e => e.Employers).WithMany(e => e.Jobs).HasForeignKey(e => e.EmployersId).OnDelete(DeleteBehavior.ClientSetNull);
             });
         }
     }
