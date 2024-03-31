@@ -180,6 +180,9 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<string>("JobName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ProfessionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("RequestJob")
                         .HasColumnType("nvarchar(max)");
 
@@ -218,6 +221,8 @@ namespace job_search_be.Infrastructure.Migrations
 
                     b.HasIndex("FormofworkId");
 
+                    b.HasIndex("ProfessionId");
+
                     b.HasIndex("SalaryId");
 
                     b.HasIndex("WorkexperienceId");
@@ -254,6 +259,38 @@ namespace job_search_be.Infrastructure.Migrations
                     b.HasKey("PermissionId");
 
                     b.ToTable("Permissions", (string)null);
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Profession", b =>
+                {
+                    b.Property<Guid>("ProfessionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProfessionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProfessionId");
+
+                    b.ToTable("Professions", (string)null);
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Refresh_Token", b =>
@@ -479,6 +516,11 @@ namespace job_search_be.Infrastructure.Migrations
                         .HasForeignKey("FormofworkId")
                         .IsRequired();
 
+                    b.HasOne("job_search_be.Domain.Entity.Profession", "Profession")
+                        .WithMany("Jobs")
+                        .HasForeignKey("ProfessionId")
+                        .IsRequired();
+
                     b.HasOne("job_search_be.Domain.Entity.Salary", "Salary")
                         .WithMany("Jobs")
                         .HasForeignKey("SalaryId")
@@ -494,6 +536,8 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("Employers");
 
                     b.Navigation("Formofwork");
+
+                    b.Navigation("Profession");
 
                     b.Navigation("Salary");
 
@@ -532,6 +576,11 @@ namespace job_search_be.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Formofwork", b =>
+                {
+                    b.Navigation("Jobs");
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Profession", b =>
                 {
                     b.Navigation("Jobs");
                 });

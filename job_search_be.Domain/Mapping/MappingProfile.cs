@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using job_search_be.Domain.Dto.Auth;
+using job_search_be.Domain.Dto.City;
 using job_search_be.Domain.Dto.Formofwork;
+using job_search_be.Domain.Dto.Job;
 using job_search_be.Domain.Dto.Permission;
+using job_search_be.Domain.Dto.Profession;
 using job_search_be.Domain.Dto.Role;
 using job_search_be.Domain.Dto.Salary;
 using job_search_be.Domain.Dto.User;
@@ -40,6 +43,14 @@ namespace job_search_be.Domain.Mapping
             CreateMap<Salary,SalaryDto>().ReverseMap();
             CreateMap<Salary,SalaryQuery>().ReverseMap();
 
+            CreateMap<Profession, ProfessionDto>().ReverseMap();
+            CreateMap<Profession, ProfessionQuery>().ReverseMap();
+
+            CreateMap<Job, JobDto>().ReverseMap();
+            CreateMap<Job, JobQuery>().ReverseMap();
+
+            CreateMap<City, CityDto>().ReverseMap();
+            CreateMap<City, CityQuery>().ReverseMap();
         }
     }
 }

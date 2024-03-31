@@ -21,6 +21,7 @@ namespace job_search_be.Infrastructure.Context
         public virtual DbSet<Employers> Employers { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Job> Jobs { get; set; }
+        public virtual DbSet<Profession> Professions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -72,6 +73,11 @@ namespace job_search_be.Infrastructure.Context
                 e.ToTable("Cities");
                 e.HasKey(e => e.CityId);
             });
+            modelBuilder.Entity<Profession>(e =>
+            {
+                e.ToTable("Professions");
+                e.HasKey(e => e.ProfessionId);
+            });
             modelBuilder.Entity<Job>(e =>
             {
                 e.ToTable("Jobs");
@@ -81,6 +87,7 @@ namespace job_search_be.Infrastructure.Context
                 e.HasOne(e => e.City).WithMany(e => e.Jobs).HasForeignKey(e => e.CityId).OnDelete(DeleteBehavior.ClientSetNull);
                 e.HasOne(e => e.Formofwork).WithMany(e => e.Jobs).HasForeignKey(e => e.FormofworkId).OnDelete(DeleteBehavior.ClientSetNull);
                 e.HasOne(e => e.Employers).WithMany(e => e.Jobs).HasForeignKey(e => e.EmployersId).OnDelete(DeleteBehavior.ClientSetNull);
+                e.HasOne(e => e.Profession).WithMany(e => e.Jobs).HasForeignKey(e => e.ProfessionId).OnDelete(DeleteBehavior.ClientSetNull);
             });
         }
     }

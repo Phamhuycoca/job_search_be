@@ -21,11 +21,13 @@ namespace job_search_be.Domain.Entity
         public Guid CityId {  get; set; }
         public Guid SalaryId { get; set; }
         public Guid EmployersId { get; set; }
+        public Guid ProfessionId { get; set; }
         public Workexperience? Workexperience { get; set; }
         public Formofwork? Formofwork { get; set; }
         public City? City { get; set; }
         public Salary? Salary { get; set; }
         public Employers? Employers { get; set; }
+        public Profession? Profession { get; set; }
 
 
     }

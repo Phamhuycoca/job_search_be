@@ -19,13 +19,11 @@ namespace job_search_be.Api.Controllers.Workexperience
         {
             _workexperienceService = workexperienceService;
         }
-        [HasPermission(Permission.List)]
         [HttpGet]
         public IActionResult GetAll([FromQuery] CommonListQuery query)
         {
             return Ok(_workexperienceService.Items(query));
         }
-        [HasPermission(Permission.Write)]
         [HttpPost]
         public IActionResult Create(WorkexperienceDto dto)
         {
