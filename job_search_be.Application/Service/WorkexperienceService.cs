@@ -3,6 +3,7 @@ using job_search_be.Application.Helpers;
 using job_search_be.Application.IService;
 using job_search_be.Application.Wrappers.Concrete;
 using job_search_be.Domain.Dto.Formofwork;
+using job_search_be.Domain.Dto.Salary;
 using job_search_be.Domain.Dto.Workexperience;
 using job_search_be.Domain.Entity;
 using job_search_be.Domain.Repositories;
@@ -72,6 +73,16 @@ namespace job_search_be.Application.Service
             }
             var paginatedResult = PaginatedList<WorkexperienceQuery>.ToPageList(query, commonList.page, commonList.limit);
             return new PagedDataResponse<WorkexperienceQuery>(paginatedResult, 200, query.Count());
+        }
+
+        public DataResponse<List<WorkexperienceDto>> ItemsList()
+        {
+            var query = _mapper.Map<List<WorkexperienceDto>>(_workexperienceRepository.GetAllData());
+            if (query != null)
+            {
+                return new DataResponse<List<WorkexperienceDto>>(_mapper.Map< List<WorkexperienceDto>>(query), HttpStatusCode.OK, HttpStatusMessages.OK);
+            }
+            throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
         }
 
         public DataResponse<WorkexperienceQuery> Update(WorkexperienceDto dto)

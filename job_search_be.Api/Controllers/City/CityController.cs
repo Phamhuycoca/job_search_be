@@ -45,5 +45,10 @@ namespace job_search_be.Api.Controllers.City
         {
             return Ok(_cityService.GetById(id));
         }
+        [HttpGet("ItemsList")]
+        public IActionResult ItemsList()
+        {
+            return Ok(_cityService.ItemsList());
+        }
     }
 }

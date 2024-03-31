@@ -1,5 +1,6 @@
 ﻿using job_search_be.Application.Helpers;
 using job_search_be.Application.IService;
+using job_search_be.Application.Service;
 using job_search_be.Domain.Dto.Profession;
 using job_search_be.Domain.Dto.Role;
 using Microsoft.AspNetCore.Http;
@@ -44,6 +45,11 @@ namespace job_search_be.Api.Controllers.Profession
         public IActionResult GetById(Guid id)
         {
             return Ok(_professionService.GetById(id));
+        }
+        [HttpGet("ItemsList")]
+        public IActionResult ItemsList()
+        {
+            return Ok(_professionService.ItemsList());
         }
     }
 }

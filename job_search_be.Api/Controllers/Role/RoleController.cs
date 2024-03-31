@@ -3,6 +3,8 @@ using job_search_be.Application.IService;
 using job_search_be.Application.Service;
 using job_search_be.Domain.Dto.Permission;
 using job_search_be.Domain.Dto.Role;
+using job_search_be.Infrastructure.Common.Utilities;
+using job_search_be.Infrastructure.Enum;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +19,7 @@ namespace job_search_be.Api.Controllers.Role
         {
             _roleService = roleService;
         }
+        [HasPermission(Permission.Modify)]
 
         [HttpGet]
         public IActionResult GetAll([FromQuery] CommonListQuery query)

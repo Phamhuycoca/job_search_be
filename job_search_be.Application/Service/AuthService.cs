@@ -62,7 +62,6 @@ namespace job_search_be.Application.Service
                 _userRepository.Update(user);
                 return new DataResponse<TokenDto>(CreateToken(user, roleNames), 200, "Đăng nhập thành công");
             }
-
             throw new ApiException(401, "Đăng nhập thất bại");
         }
       

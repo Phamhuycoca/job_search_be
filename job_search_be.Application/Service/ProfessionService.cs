@@ -2,6 +2,7 @@
 using job_search_be.Application.Helpers;
 using job_search_be.Application.IService;
 using job_search_be.Application.Wrappers.Concrete;
+using job_search_be.Domain.Dto.City;
 using job_search_be.Domain.Dto.Profession;
 using job_search_be.Domain.Dto.Salary;
 using job_search_be.Domain.Entity;
@@ -72,6 +73,16 @@ namespace job_search_be.Application.Service
             }
             var paginatedResult = PaginatedList<ProfessionQuery>.ToPageList(query, commonList.page, commonList.limit);
             return new PagedDataResponse<ProfessionQuery>(paginatedResult, 200, query.Count());
+        }
+
+        public DataResponse<List<ProfessionDto>> ItemsList()
+        {
+            var query = _mapper.Map<List<ProfessionDto>>(_professionRepository.GetAllData());
+            if (query != null)
+            {
+                return new DataResponse<List<ProfessionDto>>(_mapper.Map< List<ProfessionDto>>(query), HttpStatusCode.OK, HttpStatusMessages.OK);
+            }
+            throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
         }
 
         public DataResponse<ProfessionQuery> Update(ProfessionDto dto)

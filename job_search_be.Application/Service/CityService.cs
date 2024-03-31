@@ -74,6 +74,18 @@ namespace job_search_be.Application.Service
             return new PagedDataResponse<CityQuery>(paginatedResult, 200, query.Count());
         }
 
+        public DataResponse<List<CityDto>> ItemsList()
+        {
+            var query = _cityRepository.GetAllData();
+            if (query != null && query.Any())
+            {
+                var cityDtos = _mapper.Map<List<CityDto>>(query);
+                return new DataResponse<List<CityDto>>(_mapper.Map<List<CityDto>>(query), HttpStatusCode.OK, HttpStatusMessages.OK);
+            }
+            throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+        }
+
+
         public DataResponse<CityQuery> Update(CityDto dto)
         {
             var item = _cityRepository.GetById(dto.CityId);

@@ -35,6 +35,7 @@ namespace job_search_be.Application.Module
             services.AddScoped<IProfessionService, ProfessionService>();
             services.AddScoped<IJobService, JobService>();
             services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IEmployersService, EmployersService>();
 
             return services;
         }

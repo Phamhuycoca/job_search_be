@@ -28,6 +28,7 @@ namespace job_search_be.Infrastructure.Module
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IProfessionRepository, ProfessionRepository>();
             services.AddScoped<IJobRepository, JobRepository>();
+            services.AddScoped<IEmployersRepository, EmployersRepository>();
             return services;
         }
     }

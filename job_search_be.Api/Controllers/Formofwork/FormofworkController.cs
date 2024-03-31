@@ -45,5 +45,10 @@ namespace job_search_be.Api.Controllers.Formofwork
         {
             return Ok(_formofworkService.GetById(id));
         }
+        [HttpGet("ItemsList")]
+        public IActionResult ItemsList()
+        {
+            return Ok(_formofworkService.ItemsList());
+        }
     }
 }

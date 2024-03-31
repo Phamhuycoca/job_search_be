@@ -46,5 +46,10 @@ namespace job_search_be.Api.Controllers.Workexperience
         {
             return Ok(_workexperienceService.GetById(id));
         }
+        [HttpGet("ItemsList")]
+        public IActionResult ItemsList()
+        {
+            return Ok(_workexperienceService.ItemsList());
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace job_search_be.Application.IService
     public interface ICityService
     {
         PagedDataResponse<CityQuery> Items(CommonListQuery commonList);
+        DataResponse<List<CityDto>> ItemsList();
         DataResponse<CityQuery> Create(CityDto dto);
         DataResponse<CityQuery> Update(CityDto dto);
         DataResponse<CityQuery> Delete(Guid id);

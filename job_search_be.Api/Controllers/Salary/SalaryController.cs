@@ -45,5 +45,10 @@ namespace job_search_be.Api.Controllers.Salary
         {
             return Ok(_salaryService.GetById(id));
         }
+        [HttpGet("ItemsList")]
+        public IActionResult ItemsList()
+        {
+            return Ok(_salaryService.ItemsList());
+        }
     }
 }

@@ -5,6 +5,7 @@ using job_search_be.Application.Wrappers.Concrete;
 using job_search_be.Domain.Dto.Formofwork;
 using job_search_be.Domain.Dto.Permission;
 using job_search_be.Domain.Dto.Role;
+using job_search_be.Domain.Dto.Salary;
 using job_search_be.Domain.Entity;
 using job_search_be.Domain.Repositories;
 using job_search_be.Infrastructure.Exceptions;
@@ -73,6 +74,16 @@ namespace job_search_be.Application.Service
             }
             var paginatedResult = PaginatedList<FormofworkQuery>.ToPageList(query, commonList.page, commonList.limit);
             return new PagedDataResponse<FormofworkQuery>(paginatedResult, 200, query.Count());
+        }
+
+        public DataResponse<List<FormofworkDto>> ItemsList()
+        {
+            var query = _mapper.Map<List<FormofworkDto>>(_formofworkRepository.GetAllData());
+            if (query != null)
+            {
+                return new DataResponse<List<FormofworkDto>>(_mapper.Map< List<FormofworkDto>>(query), HttpStatusCode.OK, HttpStatusMessages.OK);
+            }
+            throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
         }
 
         public DataResponse<FormofworkQuery> Update(FormofworkDto dto)
