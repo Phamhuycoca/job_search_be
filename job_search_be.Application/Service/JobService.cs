@@ -2,9 +2,13 @@
 using job_search_be.Application.Helpers;
 using job_search_be.Application.IService;
 using job_search_be.Application.Wrappers.Concrete;
+using job_search_be.Domain.Dto.City;
+using job_search_be.Domain.Dto.Formofwork;
 using job_search_be.Domain.Dto.Job;
 using job_search_be.Domain.Dto.Levelwork;
 using job_search_be.Domain.Dto.Profession;
+using job_search_be.Domain.Dto.Salary;
+using job_search_be.Domain.Dto.Workexperience;
 using job_search_be.Domain.Entity;
 using job_search_be.Domain.Repositories;
 using job_search_be.Infrastructure.Exceptions;
@@ -22,10 +26,76 @@ namespace job_search_be.Application.Service
     {
         private readonly IJobRepository _jobRepository;
         private readonly IMapper _mapper;
-        public JobService(IJobRepository jobRepository, IMapper mapper)
+        private readonly IFormofworkRepository _formofworkRepository;
+        private readonly ILevelworkRepository _levelworkRepository;
+        private readonly ICityRepository _cityRepository;
+        private readonly IProfessionRepository _professionRepository;
+        private readonly ISalaryRepository _aryRepository;
+        private readonly IWorkexperienceRepository _workexperienceRepository;
+        public JobService(IJobRepository jobRepository, IMapper mapper,
+            IFormofworkRepository formofworkRepository, 
+            ILevelworkRepository levelworkRepository, 
+            ICityRepository cityRepository, 
+            IProfessionRepository professionRepository, 
+            ISalaryRepository aryRepository, 
+            IWorkexperienceRepository workexperienceRepository)
         {
             _jobRepository = jobRepository;
             _mapper = mapper;
+            _formofworkRepository = formofworkRepository;
+            _levelworkRepository = levelworkRepository;
+            _cityRepository = cityRepository;
+            _professionRepository = professionRepository;
+            _aryRepository = aryRepository;
+            _workexperienceRepository = workexperienceRepository;
+        }
+
+        public PagedDataResponse<JobQuery> Items(CommonListQuery commonListQuery, Guid objId)
+        {
+            var query = _mapper.Map<List<JobQuery>>(_jobRepository.GetAllData().Where(x => x.EmployersId == objId).ToList());
+            var salaries = _mapper.Map<List<SalaryDto>>(_aryRepository.GetAllData());
+            var formofworks= _mapper.Map<List<FormofworkDto>>(_formofworkRepository.GetAllData());
+            var levelworks=_mapper.Map<List<LevelworkDto>>(_levelworkRepository.GetAllData());
+            var workexperiences = _mapper.Map<List<WorkexperienceDto>>(_workexperienceRepository.GetAllData());
+            var professions=_mapper.Map<List<ProfessionDto>>(_professionRepository.GetAllData());
+            var cities=_mapper.Map<List<CityDto>>(_cityRepository.GetAllData());           
+            var items = from jobs in query
+                        join salary in salaries on jobs.SalaryId equals salary.SalaryId
+                        join
+                       formofwork in formofworks on jobs.FormofworkId equals formofwork.FormofworkId
+                        join
+                       levelwork in levelworks on jobs.LevelworkId equals levelwork.LevelworkId
+                        join
+                       workexperience in workexperiences on jobs.WorkexperienceId equals workexperience.WorkexperienceId
+                        join
+                       profession in professions on jobs.ProfessionId equals profession.ProfessionId
+                        join
+                       city in cities on jobs.CityId equals city.CityId
+                        select new JobQuery
+                        {
+                            JobId=jobs.JobId,
+                            JobName=jobs.JobName,
+                            RequestJob=jobs.RequestJob,
+                            BenefitsJob=jobs.BenefitsJob,
+                            AddressJob=jobs.AddressJob,
+                            WorkingTime=jobs.WorkingTime,
+                            ExpirationDate=jobs.ExpirationDate,
+                            WorkexperienceName=workexperience.WorkexperienceName,
+                            FormofworkName=formofwork.FormofworkName,
+                            CityName=city.CityName,
+                            SalaryPrice=salary.SalaryPrice,
+                            ProfessionName=profession.ProfessionName,
+                            LevelworkName=levelwork.LevelworkName,
+                        };
+            if (!string.IsNullOrEmpty(commonListQuery.keyword))
+            {
+                items = items.Where(x => x.CityName.Contains(commonListQuery.keyword) ||
+                x.JobName.Contains(commonListQuery.keyword) ||
+                x.SalaryPrice.Contains(commonListQuery.keyword)).ToList();
+            }
+
+            var paginatedResult = PaginatedList<JobQuery>.ToPageList(_mapper.Map<List<JobQuery>>(items), commonListQuery.page, commonListQuery.limit);
+            return new PagedDataResponse<JobQuery>(paginatedResult, 200, items.Count());
         }
 
         public DataResponse<JobQuery> Create(JobDto dto)
@@ -64,17 +134,7 @@ namespace job_search_be.Application.Service
             return new DataResponse<JobQuery>(_mapper.Map<JobQuery>(item), HttpStatusCode.OK, HttpStatusMessages.OK);
         }
 
-        public PagedDataResponse<JobQuery> Items(CommonListQuery commonListQuery)
-        {
-            var query = _mapper.Map<List<JobQuery>>(_jobRepository.GetAllData());
-            if (!string.IsNullOrEmpty(commonListQuery.keyword))
-            {
-                query = query.Where(x => x.JobName.Contains(commonListQuery.keyword) ||
-                                         x.WorkingTime.Contains(commonListQuery.keyword)).ToList();
-            }
-            var paginatedResult = PaginatedList<JobQuery>.ToPageList(query, commonListQuery.page, commonListQuery.limit);
-            return new PagedDataResponse<JobQuery>(paginatedResult, 200, query.Count());
-        }
+       
 
         public DataResponse<List<JobQuery>> ItemsNoQuery()
         {

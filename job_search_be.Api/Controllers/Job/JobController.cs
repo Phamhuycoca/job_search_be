@@ -25,7 +25,12 @@ namespace job_search_be.Api.Controllers.Job
         [HttpGet]
         public IActionResult GetAll([FromQuery] CommonListQuery query)
         {
-            return Ok(_jobService.Items(query));
+            var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if(objId == null)
+            {
+                throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
+            }
+            return Ok(_jobService.Items(query,Guid.Parse(objId)));
         }
         //[Authorize]
         [HttpPost]
@@ -71,7 +76,7 @@ namespace job_search_be.Api.Controllers.Job
             {
                 throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
             }
-            var checkId = _employersService.ItemsList().Data.Where(x => x.EmployersId == id).FirstOrDefault();
+            var checkId = _employersService.ItemsList().Data.Where(x => x.EmployersId == Guid.Parse(objId)).FirstOrDefault();
             if (checkId == null)
             {
                 throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, "Không tìm thấy thông tin nhà tuyển dụng");
@@ -87,7 +92,7 @@ namespace job_search_be.Api.Controllers.Job
             {
                 throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
             }
-            var checkId = _employersService.ItemsList().Data.Where(x => x.EmployersId == id).FirstOrDefault();
+            var checkId = _employersService.ItemsList().Data.Where(x => x.EmployersId == Guid.Parse(objId)).FirstOrDefault();
             if (checkId == null)
             {
                 throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, "Không tìm thấy thông tin nhà tuyển dụng");
