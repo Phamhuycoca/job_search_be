@@ -11,7 +11,6 @@ namespace job_search_be.Domain.Entity
     {
         public Guid JobId { get; set; }
         public string? JobName { get; set; }
-        public string? JobDescription { get; set;}
         public string? RequestJob {  get; set; }
         public string? BenefitsJob { get; set; }
         public string? AddressJob { get; set; }
@@ -22,6 +21,7 @@ namespace job_search_be.Domain.Entity
         public Guid SalaryId { get; set; }
         public Guid EmployersId { get; set; }
         public Guid ProfessionId { get; set; }
+        public Guid LevelworkId { get; set; }
         public Workexperience? Workexperience { get; set; }
         public Formofwork? Formofwork { get; set; }
         public City? City { get; set; }
@@ -29,6 +29,6 @@ namespace job_search_be.Domain.Entity
         public Employers? Employers { get; set; }
         public Profession? Profession { get; set; }
 
-
+        public Levelwork? Levelwork { get; set; }
     }
 }

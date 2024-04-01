@@ -121,6 +121,43 @@ namespace job_search_be.Infrastructure.Migrations
                     b.ToTable("Employers", (string)null);
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Employers_Refresh_Token", b =>
+                {
+                    b.Property<Guid>("EmployersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RefreshTokenExpiration")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Refresh_TokenExpires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("EmployersId");
+
+                    b.ToTable("Employers_Refresh_Token", (string)null);
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Formofwork", b =>
                 {
                     b.Property<Guid>("FormofworkId")
@@ -174,11 +211,11 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<Guid>("FormofworkId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("JobDescription")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("JobName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("LevelworkId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProfessionId")
                         .HasColumnType("uniqueidentifier");
@@ -221,6 +258,8 @@ namespace job_search_be.Infrastructure.Migrations
 
                     b.HasIndex("FormofworkId");
 
+                    b.HasIndex("LevelworkId");
+
                     b.HasIndex("ProfessionId");
 
                     b.HasIndex("SalaryId");
@@ -228,6 +267,38 @@ namespace job_search_be.Infrastructure.Migrations
                     b.HasIndex("WorkexperienceId");
 
                     b.ToTable("Jobs", (string)null);
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Levelwork", b =>
+                {
+                    b.Property<Guid>("LevelworkId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LevelworkName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("LevelworkId");
+
+                    b.ToTable("Levelworks", (string)null);
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Permission", b =>
@@ -499,6 +570,16 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("City");
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Employers_Refresh_Token", b =>
+                {
+                    b.HasOne("job_search_be.Domain.Entity.Employers", "Employers")
+                        .WithMany("Refresh_Tokens")
+                        .HasForeignKey("EmployersId")
+                        .IsRequired();
+
+                    b.Navigation("Employers");
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Job", b =>
                 {
                     b.HasOne("job_search_be.Domain.Entity.City", "City")
@@ -514,6 +595,11 @@ namespace job_search_be.Infrastructure.Migrations
                     b.HasOne("job_search_be.Domain.Entity.Formofwork", "Formofwork")
                         .WithMany("Jobs")
                         .HasForeignKey("FormofworkId")
+                        .IsRequired();
+
+                    b.HasOne("job_search_be.Domain.Entity.Levelwork", "Levelwork")
+                        .WithMany("Jobs")
+                        .HasForeignKey("LevelworkId")
                         .IsRequired();
 
                     b.HasOne("job_search_be.Domain.Entity.Profession", "Profession")
@@ -536,6 +622,8 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("Employers");
 
                     b.Navigation("Formofwork");
+
+                    b.Navigation("Levelwork");
 
                     b.Navigation("Profession");
 
@@ -573,9 +661,16 @@ namespace job_search_be.Infrastructure.Migrations
             modelBuilder.Entity("job_search_be.Domain.Entity.Employers", b =>
                 {
                     b.Navigation("Jobs");
+
+                    b.Navigation("Refresh_Tokens");
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Formofwork", b =>
+                {
+                    b.Navigation("Jobs");
+                });
+
+            modelBuilder.Entity("job_search_be.Domain.Entity.Levelwork", b =>
                 {
                     b.Navigation("Jobs");
                 });

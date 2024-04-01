@@ -29,6 +29,8 @@ namespace job_search_be.Infrastructure.Module
             services.AddScoped<IProfessionRepository, ProfessionRepository>();
             services.AddScoped<IJobRepository, JobRepository>();
             services.AddScoped<IEmployersRepository, EmployersRepository>();
+            services.AddScoped<IEmployers_Refresh_TokenRepository, Employers_Refresh_TokenRepository>();
+            services.AddScoped<ILevelworkRepository, LevelworkRepository>();
             return services;
         }
     }

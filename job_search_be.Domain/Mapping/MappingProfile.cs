@@ -4,6 +4,7 @@ using job_search_be.Domain.Dto.City;
 using job_search_be.Domain.Dto.Employers;
 using job_search_be.Domain.Dto.Formofwork;
 using job_search_be.Domain.Dto.Job;
+using job_search_be.Domain.Dto.Levelwork;
 using job_search_be.Domain.Dto.Permission;
 using job_search_be.Domain.Dto.Profession;
 using job_search_be.Domain.Dto.Role;
@@ -23,26 +24,26 @@ namespace job_search_be.Domain.Mapping
     {
         public MappingProfile()
         {
-           CreateMap<Permission,PermissionDto>().ReverseMap();
-           CreateMap<Permission,PermissionQuery>().ReverseMap();
+            CreateMap<Permission, PermissionDto>().ReverseMap();
+            CreateMap<Permission, PermissionQuery>().ReverseMap();
 
-           CreateMap<Role,RoleDto>().ReverseMap();
-           CreateMap<Role,RoleQuery>().ReverseMap();
+            CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<Role, RoleQuery>().ReverseMap();
 
             CreateMap<User, LoginDto>().ReverseMap();
             CreateMap<Refresh_Token, RefreshTokenDto>().ReverseMap();
 
-            CreateMap<User,UserQuery>().ReverseMap();
-            CreateMap<User,UserDto>().ReverseMap();
+            CreateMap<User, UserQuery>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
 
             CreateMap<Formofwork, FormofworkDto>().ReverseMap();
             CreateMap<Formofwork, FormofworkQuery>().ReverseMap();
 
             CreateMap<Workexperience, WorkexperienceDto>().ReverseMap();
-            CreateMap<Workexperience,WorkexperienceQuery>().ReverseMap();
+            CreateMap<Workexperience, WorkexperienceQuery>().ReverseMap();
 
-            CreateMap<Salary,SalaryDto>().ReverseMap();
-            CreateMap<Salary,SalaryQuery>().ReverseMap();
+            CreateMap<Salary, SalaryDto>().ReverseMap();
+            CreateMap<Salary, SalaryQuery>().ReverseMap();
 
             CreateMap<Profession, ProfessionDto>().ReverseMap();
             CreateMap<Profession, ProfessionQuery>().ReverseMap();
@@ -55,6 +56,13 @@ namespace job_search_be.Domain.Mapping
 
             CreateMap<Employers, EmployersDto>().ReverseMap();
             CreateMap<Employers, EmployersQuery>().ReverseMap();
+
+            CreateMap<Employers, EmployersLogin>().ReverseMap();
+            CreateMap<Employers_Refresh_Token, Employers_Refresh_TokenDto>().ReverseMap();
+
+
+            CreateMap<Levelwork, LevelworkDto>().ReverseMap();
+            CreateMap<Levelwork, LevelworkQuery>().ReverseMap();
         }
     }
 }

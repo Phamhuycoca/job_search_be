@@ -24,6 +24,8 @@ namespace job_search_be.Domain.Entity
         public Guid? CityId{ get;set;}
         public City? City { get;set;}
         public ICollection<Job>? Jobs { get; set; }
+        public virtual ICollection<Employers_Refresh_Token>? Refresh_Tokens{ get; set; }
+
 
     }
 }

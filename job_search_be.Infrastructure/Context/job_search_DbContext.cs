@@ -22,6 +22,8 @@ namespace job_search_be.Infrastructure.Context
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Job> Jobs { get; set; }
         public virtual DbSet<Profession> Professions { get; set; }
+        public virtual DbSet<Employers_Refresh_Token> Employers_Refresh_token{ get; set; }
+        public virtual DbSet<Levelwork> Levelworks { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -88,6 +90,18 @@ namespace job_search_be.Infrastructure.Context
                 e.HasOne(e => e.Formofwork).WithMany(e => e.Jobs).HasForeignKey(e => e.FormofworkId).OnDelete(DeleteBehavior.ClientSetNull);
                 e.HasOne(e => e.Employers).WithMany(e => e.Jobs).HasForeignKey(e => e.EmployersId).OnDelete(DeleteBehavior.ClientSetNull);
                 e.HasOne(e => e.Profession).WithMany(e => e.Jobs).HasForeignKey(e => e.ProfessionId).OnDelete(DeleteBehavior.ClientSetNull);
+                e.HasOne(e => e.Levelwork).WithMany(e => e.Jobs).HasForeignKey(e => e.LevelworkId).OnDelete(DeleteBehavior.ClientSetNull);
+            });
+            modelBuilder.Entity<Employers_Refresh_Token>(e =>
+            {
+                e.ToTable("Employers_Refresh_Token");
+                e.HasKey(e => e.EmployersId);
+                e.HasOne(e => e.Employers).WithMany(e => e.Refresh_Tokens).HasForeignKey(e => e.EmployersId).OnDelete(DeleteBehavior.ClientSetNull);
+            });
+            modelBuilder.Entity<Levelwork>(e =>
+            {
+                e.ToTable("Levelworks");
+                e.HasKey(e => e.LevelworkId);
             });
         }
     }
