@@ -202,31 +202,34 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<string>("BenefitsJob")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CityId")
+                    b.Property<Guid?>("CityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("EmployersId")
+                    b.Property<Guid?>("EmployersId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("FormofworkId")
+                    b.Property<string>("ExpirationDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("FormofworkId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("JobName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("LevelworkId")
+                    b.Property<Guid?>("LevelworkId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProfessionId")
+                    b.Property<Guid?>("ProfessionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RequestJob")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("SalaryId")
+                    b.Property<Guid?>("SalaryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("WorkexperienceId")
+                    b.Property<Guid?>("WorkexperienceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("WorkingTime")
@@ -584,38 +587,31 @@ namespace job_search_be.Infrastructure.Migrations
                 {
                     b.HasOne("job_search_be.Domain.Entity.City", "City")
                         .WithMany("Jobs")
-                        .HasForeignKey("CityId")
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
                     b.HasOne("job_search_be.Domain.Entity.Employers", "Employers")
                         .WithMany("Jobs")
-                        .HasForeignKey("EmployersId")
-                        .IsRequired();
+                        .HasForeignKey("EmployersId");
 
                     b.HasOne("job_search_be.Domain.Entity.Formofwork", "Formofwork")
                         .WithMany("Jobs")
-                        .HasForeignKey("FormofworkId")
-                        .IsRequired();
+                        .HasForeignKey("FormofworkId");
 
                     b.HasOne("job_search_be.Domain.Entity.Levelwork", "Levelwork")
                         .WithMany("Jobs")
-                        .HasForeignKey("LevelworkId")
-                        .IsRequired();
+                        .HasForeignKey("LevelworkId");
 
                     b.HasOne("job_search_be.Domain.Entity.Profession", "Profession")
                         .WithMany("Jobs")
-                        .HasForeignKey("ProfessionId")
-                        .IsRequired();
+                        .HasForeignKey("ProfessionId");
 
                     b.HasOne("job_search_be.Domain.Entity.Salary", "Salary")
                         .WithMany("Jobs")
-                        .HasForeignKey("SalaryId")
-                        .IsRequired();
+                        .HasForeignKey("SalaryId");
 
                     b.HasOne("job_search_be.Domain.Entity.Workexperience", "Workexperience")
                         .WithMany("Jobs")
-                        .HasForeignKey("WorkexperienceId")
-                        .IsRequired();
+                        .HasForeignKey("WorkexperienceId");
 
                     b.Navigation("City");
 

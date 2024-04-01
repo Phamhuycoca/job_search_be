@@ -52,7 +52,7 @@ namespace job_search_be.Api.Controllers.Employers
         {
             return Ok(_employersService.ItemsList());
         }
-        [HttpPost("Login")]
+      /*  [HttpPost("Login")]
         public IActionResult Login(EmployersLogin dto)
         {
             return Ok(_employersService.Login(dto));
@@ -61,6 +61,6 @@ namespace job_search_be.Api.Controllers.Employers
         public IActionResult Refresh_token([FromBody] RefreshTokenSettings refreshToken)
         {
             return Ok(_employersService.Refresh_Token(refreshToken));
-        }
+        }*/
     }
 }

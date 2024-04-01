@@ -79,7 +79,7 @@ namespace job_search_be.Application.Service
             var query = _levelworkRepository.GetAllData();
             if (query != null && query.Any())
             {
-                var cityDtos = _mapper.Map<List<CityDto>>(query);
+                var cityDtos = _mapper.Map<List<LevelworkDto>>(query);
                 return new DataResponse<List<LevelworkDto>>(_mapper.Map<List<LevelworkDto>>(query), HttpStatusCode.OK, HttpStatusMessages.OK);
             }
             throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);

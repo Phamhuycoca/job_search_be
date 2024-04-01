@@ -3,6 +3,7 @@ using job_search_be.Application.Helpers;
 using job_search_be.Application.IService;
 using job_search_be.Application.Wrappers.Concrete;
 using job_search_be.Domain.Dto.Job;
+using job_search_be.Domain.Dto.Levelwork;
 using job_search_be.Domain.Dto.Profession;
 using job_search_be.Domain.Entity;
 using job_search_be.Domain.Repositories;
@@ -73,6 +74,17 @@ namespace job_search_be.Application.Service
             }
             var paginatedResult = PaginatedList<JobQuery>.ToPageList(query, commonListQuery.page, commonListQuery.limit);
             return new PagedDataResponse<JobQuery>(paginatedResult, 200, query.Count());
+        }
+
+        public DataResponse<List<JobQuery>> ItemsNoQuery()
+        {
+            var query = _jobRepository.GetAllData();
+            if (query != null && query.Any())
+            {
+                var cityDtos = _mapper.Map<List<LevelworkDto>>(query);
+                return new DataResponse<List<JobQuery>>(_mapper.Map<List<JobQuery>>(query), HttpStatusCode.OK, HttpStatusMessages.OK);
+            }
+            throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
         }
 
         public DataResponse<JobQuery> Update(JobDto dto)
