@@ -4,9 +4,12 @@ using job_search_be.Application.Service;
 using job_search_be.Domain.Dto.Auth;
 using job_search_be.Domain.Dto.Employers;
 using job_search_be.Domain.Dto.Workexperience;
+using job_search_be.Infrastructure.Exceptions;
 using job_search_be.Infrastructure.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace job_search_be.Api.Controllers.Employers
 {
@@ -32,7 +35,7 @@ namespace job_search_be.Api.Controllers.Employers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult Update(EmployersDto dto)
+        public IActionResult Update([FromForm]EmployersDto dto)
         {
             return Ok(_employersService.Update(dto));
         }
@@ -52,15 +55,26 @@ namespace job_search_be.Api.Controllers.Employers
         {
             return Ok(_employersService.ItemsList());
         }
-      /*  [HttpPost("Login")]
-        public IActionResult Login(EmployersLogin dto)
+        /*  [HttpPost("Login")]
+          public IActionResult Login(EmployersLogin dto)
+          {
+              return Ok(_employersService.Login(dto));
+          }
+          [HttpPost("Refresh_token")]
+          public IActionResult Refresh_token([FromBody] RefreshTokenSettings refreshToken)
+          {
+              return Ok(_employersService.Refresh_Token(refreshToken));
+          }*/
+        [Authorize]
+        [HttpGet("GetInfo")]
+        public IActionResult GetById()
         {
-            return Ok(_employersService.Login(dto));
+            var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (objId == null)
+            {
+                throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
+            }
+            return Ok(_employersService.GetById(Guid.Parse(objId)));
         }
-        [HttpPost("Refresh_token")]
-        public IActionResult Refresh_token([FromBody] RefreshTokenSettings refreshToken)
-        {
-            return Ok(_employersService.Refresh_Token(refreshToken));
-        }*/
     }
 }

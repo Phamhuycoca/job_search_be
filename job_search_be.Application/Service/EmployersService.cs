@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet;
 using job_search_be.Application.Helpers;
 using job_search_be.Application.IService;
 using job_search_be.Application.Wrappers.Concrete;
@@ -30,12 +31,15 @@ namespace job_search_be.Application.Service
         private readonly IMapper _mapper;
         private readonly JWTSettings _jwtSettings;
         private readonly IEmployers_Refresh_TokenRepository _refreshTokenRepository;
-        public EmployersService(IEmployersRepository employersRepository, IMapper mapper, IOptions<JWTSettings> jwtSettings, IEmployers_Refresh_TokenRepository refreshTokenRepository)
+        private readonly Cloudinary _cloudinary;
+
+        public EmployersService(IEmployersRepository employersRepository, IMapper mapper, IOptions<JWTSettings> jwtSettings, IEmployers_Refresh_TokenRepository refreshTokenRepository,Cloudinary cloudinary)
         {
             _employersRepository = employersRepository;
             _mapper = mapper;
             _jwtSettings = jwtSettings.Value;
             _refreshTokenRepository = refreshTokenRepository;
+            _cloudinary = cloudinary;
         }
         public DataResponse<EmployersQuery> Create(EmployersDto dto)
         {
@@ -98,10 +102,19 @@ namespace job_search_be.Application.Service
       
         public DataResponse<EmployersQuery> Update(EmployersDto dto)
         {
+            UpLoadImage upload = new UpLoadImage(_cloudinary);
             var item = _employersRepository.GetById(dto.EmployersId);
             if (item == null)
             {
                 throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            if (dto.file != null)
+            {
+                if (item.CompanyLogo!= null)
+                {
+                    upload.DeleteImage(item.CompanyLogo);
+                }
+                dto.CompanyLogo = upload.ImageUpload(dto.file);
             }
             var newData = _employersRepository.Update(_mapper.Map(dto, item));
             if (newData != null)

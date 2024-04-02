@@ -44,7 +44,7 @@ namespace job_search_be.Infrastructure.Settings
         public static string RefreshTokenExpired => "Refresh Token đã hết hạn";
         public static string BadRequest => "Không thể hiển thị danh sách";
         public static string Forbidden => "Không có quyền thực hiện";
-
+        public static string Unauthorized => "Chưa đăng nhập";
 
 
 
