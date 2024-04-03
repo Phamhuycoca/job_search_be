@@ -94,7 +94,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseHttpsRedirection();
+app.UseFileServer();
+app.UseStaticFiles();
 app.UseCustomExceptionMiddleware();
 app.UseAuthentication();
 app.UseCors(builder =>

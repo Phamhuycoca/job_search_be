@@ -1,5 +1,7 @@
-﻿using job_search_be.Application.Helpers;
+﻿using job_search_be.Api.Service;
+using job_search_be.Application.Helpers;
 using job_search_be.Application.Wrappers.Concrete;
+using job_search_be.Domain.Dto.Job_Seeker;
 using job_search_be.Infrastructure.Common.Utilities;
 using job_search_be.Infrastructure.Enum;
 using job_search_be.Infrastructure.Exceptions;
@@ -19,7 +21,6 @@ namespace job_search_be.Api.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
@@ -45,10 +46,12 @@ namespace job_search_be.Api.Controllers
               return Ok(userId);
            
         }
-        [HttpGet("Hello")]
-        public IActionResult Hello()
+        [HttpPost("upload")]
+        public IActionResult UploadFile(IFormFile file)
         {
-            return Ok("Hello");
+            var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+            var dto=FileUploadService.CreatePDF(file);
+            return Ok(new { url, dto });
         }
     }
 }

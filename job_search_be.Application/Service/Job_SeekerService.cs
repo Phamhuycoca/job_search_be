@@ -90,12 +90,29 @@ namespace job_search_be.Application.Service
             return new PagedDataResponse<Job_SeekerQuery>(paginatedResult, 200, query.Count());
         }       
 
-        public DataResponse<Job_SeekerQuery> Update(Job_SeekerDto dto)
+        public DataResponse<Job_SeekerQuery> Update(Job_SeekerUpdateDto dto)
         {
+            UpLoadImage upload = new UpLoadImage(_cloudinary);
             var item = _job_SeekerRepository.GetById(dto.Job_SeekerId);
             if (item == null)
             {
                 throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            if (dto.cv != null)
+            {
+                if(item.Job_Cv != null)
+                {
+                    FileUploadService.DeletePDF(item.Job_Cv);
+                }
+                dto.Job_Cv = FileUploadService.CreatePDF(dto.cv);
+            }
+            if(dto.avt != null)
+            {
+                if (item.Avatar != null)
+                {
+                    upload.DeleteImage(item.Avatar);
+                }
+                dto.Avatar=upload.ImageUpload(dto.avt);
             }
             var newData = _job_SeekerRepository.Update(_mapper.Map(dto, item));
             if (newData != null)

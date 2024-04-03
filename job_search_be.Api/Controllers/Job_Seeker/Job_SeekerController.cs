@@ -3,8 +3,12 @@ using job_search_be.Application.IService;
 using job_search_be.Application.Service;
 using job_search_be.Domain.Dto.Employers;
 using job_search_be.Domain.Dto.Job_Seeker;
+using job_search_be.Infrastructure.Exceptions;
+using job_search_be.Infrastructure.Settings;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace job_search_be.Api.Controllers.Job_Seeker
 {
@@ -29,7 +33,7 @@ namespace job_search_be.Api.Controllers.Job_Seeker
         }
 
         [HttpPatch("{id}")]
-        public IActionResult Update([FromForm] Job_SeekerDto dto)
+        public IActionResult Update([FromForm] Job_SeekerUpdateDto dto)
         {
             return Ok(_job_SeekerService.Update(dto));
         }
@@ -43,6 +47,17 @@ namespace job_search_be.Api.Controllers.Job_Seeker
         public IActionResult GetById(Guid id)
         {
             return Ok(_job_SeekerService.GetById(id));
+        }
+        [Authorize]
+        [HttpGet("GetInfo")]
+        public IActionResult GetById()
+        {
+            var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (objId == null)
+            {
+                throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
+            }
+            return Ok(_job_SeekerService.GetById(Guid.Parse(objId)));
         }
     }
 }

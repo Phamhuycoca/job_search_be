@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "F:\\Đồ án tốt nghiệp\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\3495280c-0ec6-4225-be9c-04aafde92b04.pdf",
+      "PackagePath": "staticwebassets\\PDFs\\3495280c-0ec6-4225-be9c-04aafde92b04.pdf"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.job_search_be.Api.props",
+      "PackagePath": "build\\job_search_be.Api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.job_search_be.Api.props",
+      "PackagePath": "buildMultiTargeting\\job_search_be.Api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.job_search_be.Api.props",
+      "PackagePath": "buildTransitive\\job_search_be.Api.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.job_search_be.Api.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
