@@ -19,12 +19,16 @@ namespace job_search_be.Api.Controllers.Auth
         private readonly IEmployersService _employersService;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IEmployers_Refresh_TokenRepository _employers_Refresh_TokenRepository;
-        public AuthController(IAuthService authService, IEmployersService employersService, IEmployers_Refresh_TokenRepository employers_Refresh_TokenRepository,IRefreshTokenRepository refreshTokenRepository)
+        private readonly IJob_SeekerService _jobService;
+        private readonly IJob_Seeker_Refresh_Token_Repository _job_seeker_Refresh_TokensRepository;
+        public AuthController(IAuthService authService, IEmployersService employersService, IEmployers_Refresh_TokenRepository employers_Refresh_TokenRepository,IRefreshTokenRepository refreshTokenRepository, IJob_SeekerService jobService, IJob_Seeker_Refresh_Token_Repository job_seeker_Refresh_TokensRepository)
         {
             _authService = authService;
             _employersService = employersService;
             _employers_Refresh_TokenRepository = employers_Refresh_TokenRepository;
             _refreshTokenRepository = refreshTokenRepository;
+            _jobService = jobService;
+            _job_seeker_Refresh_TokensRepository = job_seeker_Refresh_TokensRepository;
         }
         [HttpPost("Login")]
         public IActionResult Login(LoginDto dto)
@@ -43,6 +47,11 @@ namespace job_search_be.Api.Controllers.Auth
             if (check2!=null)
             {
                 return Ok(_employersService.Refresh_Token(refreshToken));
+            }
+            var check3=_job_seeker_Refresh_TokensRepository.GetAllData().Where(x=>x.RefreshToken==refreshToken.Refresh_Token).FirstOrDefault();
+            if (check3!=null)
+            {
+                return Ok(_jobService.Refresh_Token(refreshToken));
             }
             throw new ApiException(HttpStatusCode.NOT_FOUND, HttpStatusMessages.NotFound);
         }

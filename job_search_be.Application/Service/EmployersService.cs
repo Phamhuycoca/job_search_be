@@ -29,8 +29,8 @@ namespace job_search_be.Application.Service
     {
         private readonly IEmployersRepository _employersRepository;
         private readonly IMapper _mapper;
-        private readonly JWTSettings _jwtSettings;
         private readonly IEmployers_Refresh_TokenRepository _refreshTokenRepository;
+        private readonly JWTSettings _jwtSettings;
         private readonly Cloudinary _cloudinary;
 
         public EmployersService(IEmployersRepository employersRepository, IMapper mapper, IOptions<JWTSettings> jwtSettings, IEmployers_Refresh_TokenRepository refreshTokenRepository,Cloudinary cloudinary)

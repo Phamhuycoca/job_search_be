@@ -4,6 +4,7 @@ using job_search_be.Domain.Dto.City;
 using job_search_be.Domain.Dto.Employers;
 using job_search_be.Domain.Dto.Formofwork;
 using job_search_be.Domain.Dto.Job;
+using job_search_be.Domain.Dto.Job_Seeker;
 using job_search_be.Domain.Dto.Levelwork;
 using job_search_be.Domain.Dto.Permission;
 using job_search_be.Domain.Dto.Profession;
@@ -63,6 +64,12 @@ namespace job_search_be.Domain.Mapping
 
             CreateMap<Levelwork, LevelworkDto>().ReverseMap();
             CreateMap<Levelwork, LevelworkQuery>().ReverseMap();
+
+            CreateMap<Job_Seeker, Job_SeekerDto>().ReverseMap();
+            CreateMap<Job_Seeker, Job_SeekerQuery>().ReverseMap();
+
+            CreateMap<Job_Seeker, Job_Seeker_Login>().ReverseMap();
+            CreateMap<Job_Seeker, Job_Seeker_Refresh_TokenDto>().ReverseMap();
         }
     }
 }
