@@ -45,6 +45,7 @@ namespace job_search_be.Application.Service
         public DataResponse<Job_SeekerQuery> Create(Job_SeekerDto dto)
         {
             dto.Job_SeekerId= Guid.NewGuid();
+            dto.Password = PasswordHelper.CreateHashedPassword(dto.Password);
             var newData = _job_SeekerRepository.Create(_mapper.Map<Job_Seeker>(dto));
             if (newData != null)
             {

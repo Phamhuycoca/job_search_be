@@ -1,6 +1,7 @@
 ﻿using job_search_be.Application.IService;
 using job_search_be.Domain.Dto.Auth;
 using job_search_be.Domain.Dto.Employers;
+using job_search_be.Domain.Dto.Job_Seeker;
 using job_search_be.Domain.Repositories;
 using job_search_be.Infrastructure.Exceptions;
 using job_search_be.Infrastructure.Settings;
@@ -66,10 +67,15 @@ namespace job_search_be.Api.Controllers.Auth
         {
             return Ok(_employersService.Login(dto));
         }
-       /* [HttpPost("Employers_Refresh_token")]
-        public IActionResult Employers_Refresh_token([FromBody] RefreshTokenSettings refreshToken)
+        [HttpPost("JobSeekerLogin")]
+        public IActionResult JobSeeker_Login(Job_Seeker_Login dto)
         {
-            return Ok(_employersService.Refresh_Token(refreshToken));
-        }*/
+            return Ok(_jobService.Login(dto));
+        }
+        /* [HttpPost("Employers_Refresh_token")]
+         public IActionResult Employers_Refresh_token([FromBody] RefreshTokenSettings refreshToken)
+         {
+             return Ok(_employersService.Refresh_Token(refreshToken));
+         }*/
     }
 }

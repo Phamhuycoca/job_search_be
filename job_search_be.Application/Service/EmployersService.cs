@@ -100,7 +100,7 @@ namespace job_search_be.Application.Service
             throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
         }
       
-        public DataResponse<EmployersQuery> Update(EmployersDto dto)
+        public DataResponse<EmployersQuery> Update(EmployersUpdateDto dto)
         {
             UpLoadImage upload = new UpLoadImage(_cloudinary);
             var item = _employersRepository.GetById(dto.EmployersId);
@@ -116,6 +116,7 @@ namespace job_search_be.Application.Service
                 }
                 dto.CompanyLogo = upload.ImageUpload(dto.file);
             }
+            
             var newData = _employersRepository.Update(_mapper.Map(dto, item));
             if (newData != null)
             {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace job_search_be.Domain.Dto.Employers
 {
-    public class EmployersDto
+    public class EmployersUpdateDto
     {
         public Guid EmployersId { get; set; }
         public string? CompanyName { get; set; }
@@ -18,8 +18,7 @@ namespace job_search_be.Domain.Dto.Employers
         public string? CompanyDescription { get; set; }
         public string? CompanyLogo { get; set; }
         public string? Email { get; set; }
-        public string? Password { get; set; }
-        public bool? IsActive { get; set; }
-        public int? IsStatus { get; set; }
+        public IFormFile? file { get; set; }
+        public Guid? CityId { get; set; }
     }
 }

@@ -56,6 +56,7 @@ namespace job_search_be.Domain.Mapping
             CreateMap<City, CityQuery>().ReverseMap();
 
             CreateMap<Employers, EmployersDto>().ReverseMap();
+            CreateMap<Employers, EmployersUpdateDto>().ReverseMap();
             CreateMap<Employers, EmployersQuery>().ReverseMap();
 
             CreateMap<Employers, EmployersLogin>().ReverseMap();
@@ -69,7 +70,7 @@ namespace job_search_be.Domain.Mapping
             CreateMap<Job_Seeker, Job_SeekerQuery>().ReverseMap();
 
             CreateMap<Job_Seeker, Job_Seeker_Login>().ReverseMap();
-            CreateMap<Job_Seeker, Job_Seeker_Refresh_TokenDto>().ReverseMap();
+            CreateMap<Job_Seeker_Refresh_Token, Job_Seeker_Refresh_TokenDto>().ReverseMap();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace job_search_be.Application.IService
         PagedDataResponse<EmployersQuery> Items(CommonListQuery commonList);
         DataResponse<List<EmployersDto>> ItemsList();
         DataResponse<EmployersQuery> Create(EmployersDto dto);
-        DataResponse<EmployersQuery> Update(EmployersDto dto);
+        DataResponse<EmployersQuery> Update(EmployersUpdateDto dto);
         DataResponse<EmployersQuery> Delete(Guid id);
         DataResponse<EmployersQuery> GetById(Guid id);
         DataResponse<TokenDto> Login(EmployersLogin dto);

@@ -35,7 +35,7 @@ namespace job_search_be.Api.Controllers.Employers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult Update([FromForm]EmployersDto dto)
+        public IActionResult Update([FromForm]EmployersUpdateDto dto)
         {
             return Ok(_employersService.Update(dto));
         }
