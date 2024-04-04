@@ -20,7 +20,13 @@ namespace job_search_be.Domain.Entity
         public string? Gender { get; set; }
         public string? Job_Cv { get; set; }
         public string? Academic_Level {get;set;}
+        public string? Role { get; set; }
         public virtual ICollection<Job_Seeker_Refresh_Token>? Refresh_Tokens { get; set; }
-
+        public Job_Seeker()
+        {
+            Role = "Job_seeker";
+            Avatar = "";
+            Job_Cv = "";
+        }
     }
 }

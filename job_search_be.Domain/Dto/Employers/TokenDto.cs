@@ -12,5 +12,6 @@ namespace job_search_be.Domain.Dto.Employers
         public int AccessTokenExpiration { get; set; }
         public string? RefreshToken { get; set; }
         public int RefreshTokenExpiration { get; set; }
+        public string? Role {  get; set; }
     }
 }

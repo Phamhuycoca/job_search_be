@@ -174,7 +174,8 @@ namespace job_search_be.Application.Service
                 AccessToken = token,
                 RefreshToken = CreateRefreshToken(),
                 AccessTokenExpiration = (int)((DateTimeOffset)accessTokenExpiration).ToUnixTimeSeconds(),
-                RefreshTokenExpiration = (int)((DateTimeOffset)refreshTokenExpiration).ToUnixTimeSeconds()
+                RefreshTokenExpiration = (int)((DateTimeOffset)refreshTokenExpiration).ToUnixTimeSeconds(),
+                Role=user.Role
             };
             var refresh_token = new Job_Seeker_Refresh_TokenDto
             {
@@ -247,7 +248,8 @@ namespace job_search_be.Application.Service
                 AccessToken = token,
                 RefreshToken = CreateRefreshToken(),
                 AccessTokenExpiration = (int)((DateTimeOffset)accessTokenExpiration).ToUnixTimeSeconds(),
-                RefreshTokenExpiration = refreshtoken.RefreshTokenExpiration
+                RefreshTokenExpiration = refreshtoken.RefreshTokenExpiration,
+                Role= user.Role
             };
             var refresh_token = new Job_Seeker_Refresh_TokenDto
             {

@@ -96,6 +96,9 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
 
@@ -306,6 +309,9 @@ namespace job_search_be.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("createdAt")

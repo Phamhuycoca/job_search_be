@@ -16,9 +16,9 @@ namespace job_search_be.Domain.Dto.Job_Seeker
         public string? Address { get; set; }
         public string? Avatar { get; set; }
         public string? Email { get; set; }
-        public string? Password { get; set; }
         public string? Gender { get; set; }
         public string? Job_Cv { get; set; }
         public string? Academic_Level { get; set; }
+        public string? Role { get; set; }
     }
 }
