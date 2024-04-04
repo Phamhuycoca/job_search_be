@@ -20,5 +20,6 @@ namespace job_search_be.Domain.Dto.Job_Seeker
         public string? Gender { get; set; }
         public string? Job_Cv { get; set; }
         public string? Academic_Level { get; set; }
+        
     }
 }

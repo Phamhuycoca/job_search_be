@@ -35,7 +35,8 @@ namespace job_search_be.Api.Controllers.Job_Seeker
         [HttpPatch("{id}")]
         public IActionResult Update([FromForm] Job_SeekerUpdateDto dto)
         {
-            return Ok(_job_SeekerService.Update(dto));
+            var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+            return Ok(_job_SeekerService.Update(dto, url)) ;
         }
 
         [HttpDelete("{id}")]

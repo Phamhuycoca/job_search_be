@@ -90,7 +90,7 @@ namespace job_search_be.Application.Service
             return new PagedDataResponse<Job_SeekerQuery>(paginatedResult, 200, query.Count());
         }       
 
-        public DataResponse<Job_SeekerQuery> Update(Job_SeekerUpdateDto dto)
+        public DataResponse<Job_SeekerQuery> Update(Job_SeekerUpdateDto dto,string url)
         {
             UpLoadImage upload = new UpLoadImage(_cloudinary);
             var item = _job_SeekerRepository.GetById(dto.Job_SeekerId);
@@ -100,15 +100,20 @@ namespace job_search_be.Application.Service
             }
             if (dto.cv != null)
             {
-                if(item.Job_Cv != null)
+                if(item.Job_Cv != null ||item.Job_Cv=="string")
                 {
+                    string[] path = item.Job_Cv.Split(url);
+                    if (!string.IsNullOrEmpty(path[1]))
+                    {
+                        FileUploadService.DeletePDF(path[1]);
+                    }
                     FileUploadService.DeletePDF(item.Job_Cv);
                 }
-                dto.Job_Cv = FileUploadService.CreatePDF(dto.cv);
+                dto.Job_Cv =url+ FileUploadService.CreatePDF(dto.cv);
             }
-            if(dto.avt != null)
+            if(dto.avt != null )
             {
-                if (item.Avatar != null)
+                if (item.Avatar != null || item.Avatar == "string")
                 {
                     upload.DeleteImage(item.Avatar);
                 }
@@ -121,6 +126,15 @@ namespace job_search_be.Application.Service
             }
             throw new ApiException(HttpStatusCode.BAD_REQUEST, HttpStatusMessages.UpdatedError);
         }
+
+
+
+
+
+
+
+
+
 
         public DataResponse<TokenDto> Login(Job_Seeker_Login dto)
         {
