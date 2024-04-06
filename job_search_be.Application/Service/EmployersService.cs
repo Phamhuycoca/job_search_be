@@ -6,6 +6,7 @@ using job_search_be.Application.Wrappers.Concrete;
 using job_search_be.Domain.Dto.Auth;
 using job_search_be.Domain.Dto.City;
 using job_search_be.Domain.Dto.Employers;
+using job_search_be.Domain.Dto.Job;
 using job_search_be.Domain.Entity;
 using job_search_be.Domain.Repositories;
 using job_search_be.Infrastructure.Exceptions;
@@ -32,14 +33,41 @@ namespace job_search_be.Application.Service
         private readonly IEmployers_Refresh_TokenRepository _refreshTokenRepository;
         private readonly JWTSettings _jwtSettings;
         private readonly Cloudinary _cloudinary;
+        private readonly IJobRepository _jobRepository;
+        private readonly IFormofworkRepository _formofworkRepository;
+        private readonly ILevelworkRepository _levelworkRepository;
+        private readonly ICityRepository _cityRepository;
+        private readonly IProfessionRepository _professionRepository;
+        private readonly ISalaryRepository _aryRepository;
+        private readonly IWorkexperienceRepository _workexperienceRepository;
 
-        public EmployersService(IEmployersRepository employersRepository, IMapper mapper, IOptions<JWTSettings> jwtSettings, IEmployers_Refresh_TokenRepository refreshTokenRepository,Cloudinary cloudinary)
+        public EmployersService(IEmployersRepository employersRepository,
+            IMapper mapper, 
+            IOptions<JWTSettings> jwtSettings,
+            IEmployers_Refresh_TokenRepository refreshTokenRepository,
+            Cloudinary cloudinary,
+             IFormofworkRepository formofworkRepository,
+            ILevelworkRepository levelworkRepository,
+            ICityRepository cityRepository,
+            IProfessionRepository professionRepository,
+            ISalaryRepository aryRepository,
+            IWorkexperienceRepository workexperienceRepository,
+            IJobRepository jobRepository
+            )
         {
             _employersRepository = employersRepository;
             _mapper = mapper;
             _jwtSettings = jwtSettings.Value;
             _refreshTokenRepository = refreshTokenRepository;
             _cloudinary = cloudinary;
+            _formofworkRepository = formofworkRepository;
+            _levelworkRepository = levelworkRepository;
+            _cityRepository = cityRepository;
+            _professionRepository = professionRepository;
+            _aryRepository = aryRepository;
+            _workexperienceRepository = workexperienceRepository;
+            _employersRepository = employersRepository;
+            _jobRepository = jobRepository;
         }
         public DataResponse<EmployersQuery> Create(EmployersDto dto)
         {
@@ -266,5 +294,54 @@ namespace job_search_be.Application.Service
             _refreshTokenRepository.Update(_mapper.Map<Employers_Refresh_Token>(refresh_token));
             return tokenDto;
         }
+
+        public PagedDataResponse<JobQueries> GetListJobById(CommonListQuery commonList,Guid id)
+        {
+            var query = _jobRepository.GetAllData();
+            var salaries = _aryRepository.GetAllData();
+            var formofworks = _formofworkRepository.GetAllData();
+            var levelworks = _levelworkRepository.GetAllData();
+            var workexperiences = _workexperienceRepository.GetAllData();
+            var professions = _professionRepository.GetAllData();
+            var cities = _cityRepository.GetAllData();
+            var employers = _employersRepository.GetAllData();
+
+            var items = from jobs in query
+                        join salary in salaries on jobs.SalaryId equals salary.SalaryId
+                        join formofwork in formofworks on jobs.FormofworkId equals formofwork.FormofworkId
+                        join levelwork in levelworks on jobs.LevelworkId equals levelwork.LevelworkId
+                        join workexperience in workexperiences on jobs.WorkexperienceId equals workexperience.WorkexperienceId
+                        join profession in professions on jobs.ProfessionId equals profession.ProfessionId
+                        join city in cities on jobs.CityId equals city.CityId
+                        join employer in employers on jobs.EmployersId equals employer.EmployersId where jobs.EmployersId.Equals(id)
+                        select new JobQueries
+                        {
+                            JobId = jobs.JobId,
+                            JobName = jobs.JobName,
+                            RequestJob = jobs.RequestJob,
+                            BenefitsJob = jobs.BenefitsJob,
+                            AddressJob = jobs.AddressJob,
+                            WorkingTime = jobs.WorkingTime,
+                            ExpirationDate = jobs.ExpirationDate,
+                            WorkexperienceId = jobs.WorkexperienceId,
+                            WorkexperienceName = workexperience.WorkexperienceName,
+                            FormofworkId = jobs.FormofworkId,
+                            FormofworkName = formofwork.FormofworkName,
+                            CityId = jobs.CityId,
+                            CityName = city.CityName,
+                            SalaryId = jobs.SalaryId,
+                            SalaryPrice = salary.SalaryPrice,
+                            ProfessionId = jobs.ProfessionId,
+                            ProfessionName = profession.ProfessionName,
+                            LevelworkId = jobs.LevelworkId,
+                            LevelworkName = levelwork.LevelworkName,
+                            EmployersId = jobs.EmployersId,
+                            CompanyLogo = employer.CompanyLogo,
+                            CompanyName = employer.CompanyName
+                        };
+            var paginatedResult = PaginatedList<JobQueries>.ToPageList(items.ToList(), commonList.page, commonList.limit);
+            return new PagedDataResponse<JobQueries>(paginatedResult, 200, items.Count());
+        }
     }
 }
+ 

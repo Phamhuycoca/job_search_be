@@ -18,6 +18,7 @@ namespace job_search_be.Application.IService
         DataResponse<JobQuery> Delete(Guid id);
         DataResponse<JobQuery> GetById(Guid id);
         DataResponse<List<JobQuery>> ItemsNoQuery();
+        PagedDataResponse<JobQueries> ItemsByHome(CommonQueryByHome queryByHome);
 
     }
 }

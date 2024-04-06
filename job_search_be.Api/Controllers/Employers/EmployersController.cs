@@ -76,5 +76,10 @@ namespace job_search_be.Api.Controllers.Employers
             }
             return Ok(_employersService.GetById(Guid.Parse(objId)));
         }
+        [HttpGet("GetListJobById/{id}")]
+        public IActionResult GetListJobById([FromQuery] CommonListQuery query ,Guid id)
+        {
+            return Ok(_employersService.GetListJobById(query ,id));
+        }
     }
 }
