@@ -3171,11 +3171,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\Đồ án tốt nghiệp\\job_search_be\\job_search_be.Infrastructure\\job_search_be.Infrastructure.csproj",
+      "projectUniqueName": "F:\\job_search_be\\job_search_be.Infrastructure\\job_search_be.Infrastructure.csproj",
       "projectName": "job_search_be.Infrastructure",
-      "projectPath": "F:\\Đồ án tốt nghiệp\\job_search_be\\job_search_be.Infrastructure\\job_search_be.Infrastructure.csproj",
+      "projectPath": "F:\\job_search_be\\job_search_be.Infrastructure\\job_search_be.Infrastructure.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "F:\\Đồ án tốt nghiệp\\job_search_be\\job_search_be.Infrastructure\\obj\\",
+      "outputPath": "F:\\job_search_be\\job_search_be.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3192,8 +3192,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "F:\\Đồ án tốt nghiệp\\job_search_be\\job_search_be.Domain\\job_search_be.Domain.csproj": {
-              "projectPath": "F:\\Đồ án tốt nghiệp\\job_search_be\\job_search_be.Domain\\job_search_be.Domain.csproj"
+            "F:\\job_search_be\\job_search_be.Domain\\job_search_be.Domain.csproj": {
+              "projectPath": "F:\\job_search_be\\job_search_be.Domain\\job_search_be.Domain.csproj"
             }
           }
         }

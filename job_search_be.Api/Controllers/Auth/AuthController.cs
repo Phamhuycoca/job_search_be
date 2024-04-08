@@ -77,5 +77,10 @@ namespace job_search_be.Api.Controllers.Auth
          {
              return Ok(_employersService.Refresh_Token(refreshToken));
          }*/
+        [HttpPost("google-login")]
+        public IActionResult GoogleLogin([FromBody] GoogleLoginRequest request)
+        {
+            return Ok(_jobService.Job_SeekerLoginByGoole(request));
+        }
     }
 }

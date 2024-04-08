@@ -22,5 +22,6 @@ namespace job_search_be.Application.IService
         DataResponse<Job_SeekerQuery> GetById(Guid id);
         DataResponse<TokenDto> Login(Job_Seeker_Login dto);
         DataResponse<TokenDto> Refresh_Token(RefreshTokenSettings token);
+        DataResponse<TokenDto> Job_SeekerLoginByGoole(GoogleLoginRequest request);
     }
 }

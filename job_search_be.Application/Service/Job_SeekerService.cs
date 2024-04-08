@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CloudinaryDotNet;
+using Google.Apis.Auth;
 using job_search_be.Application.Helpers;
 using job_search_be.Application.IService;
 using job_search_be.Application.Wrappers.Concrete;
@@ -14,6 +15,7 @@ using job_search_be.Infrastructure.Repositories;
 using job_search_be.Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -276,6 +278,66 @@ namespace job_search_be.Application.Service
             return tokenDto;
         }
 
+        public DataResponse<TokenDto> Job_SeekerLoginByGoole(GoogleLoginRequest request)
+        {
+            try
+            {
+                var validPayload = GoogleJsonWebSignature.ValidateAsync(request.Credential).Result;
+                if (validPayload == null)
+                {
+                    throw new ApiException(HttpStatusCode.BAD_REQUEST, HttpStatusMessages.TokenOrUserNotFound);
+                }
+                if (!checkEmail(validPayload.Email))
+                {
+
+                    var job_seeker = _job_SeekerRepository.GetAllData().Where(x => x.Email == validPayload.Email).SingleOrDefault();
+                    _job_SeekerRepository.Update(job_seeker);
+                    var token = CreateToken(job_seeker);
+                    var tokenres = new TokenDto()
+                    {
+                        AccessToken = token.AccessToken,
+                        AccessTokenExpiration = token.AccessTokenExpiration,
+                        Role = token.Role
+
+                    };
+                    return new DataResponse<TokenDto>(tokenres, 200, "Đăng nhập thành công");
+                }
+                else
+                {
+
+                    var dto = new Job_SeekerDto()
+                    {
+                        Job_SeekerId = Guid.NewGuid(),
+                        Email = validPayload.Email,
+                        Avatar = validPayload.Picture,
+                        FullName = validPayload.Name,
+                        Job_Cv = null
+                    };
+                    var user = _job_SeekerRepository.Create(_mapper.Map<Job_Seeker>(dto));
+                    var token = CreateToken(_mapper.Map<Job_Seeker>(user));
+                    var tokenres = new TokenDto()
+                    {
+                        AccessToken = token.AccessToken,
+                        AccessTokenExpiration = token.AccessTokenExpiration,
+                        Role = token.Role
+                    };
+                    return new DataResponse<TokenDto>(tokenres, 200, "Đăng nhập thành công");
+                }
+            }
+            catch (InvalidJwtException)
+            {
+                throw new ApiException(HttpStatusCode.BAD_REQUEST, "Token không hợp lệ");
+            }
+        }
+        public bool checkEmail(string email)
+        {
+            var job_seeker = _job_SeekerRepository.GetAllData().FirstOrDefault(x => x.Email.Equals(email));
+            if (job_seeker == null)
+            {
+                return true;
+            }
+            return false;
+        }
 
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+SzRX5FyiLlfkLSOZj5yWeW0u6/haZ/JeYYbLYGkTHEkJhg4fkaO+1CIUr2l6muXb+j1hxj5/sXJz2dvyYtVIA==",
+  "dgSpecHash": "qv477EN3OaCQAPngIIFhImATEb9EYNzKO0oYhoxAp4mhHzl/KZ98/p9uj3q9U0yLKFrYxSiGIkUQmwZUtBiYuQ==",
   "success": true,
-  "projectFilePath": "F:\\Đồ án tốt nghiệp\\job_search_be\\job_search_be.Domain\\job_search_be.Domain.csproj",
+  "projectFilePath": "F:\\job_search_be\\job_search_be.Domain\\job_search_be.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
