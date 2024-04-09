@@ -22,6 +22,7 @@ namespace job_search_be.Domain.Entity
         public string? Academic_Level {get;set;}
         public string? Role { get; set; }
         public virtual ICollection<Job_Seeker_Refresh_Token>? Refresh_Tokens { get; set; }
+        public virtual ICollection<Recruitment>? Recruitments { get; set; }
         public Job_Seeker()
         {
             Role = "Job_seeker";

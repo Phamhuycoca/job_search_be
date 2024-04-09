@@ -26,6 +26,7 @@ namespace job_search_be.Domain.Entity
         public ICollection<Job>? Jobs { get; set; }
         public City? City { get; set; }
         public virtual ICollection<Employers_Refresh_Token>? Refresh_Tokens { get; set; }
+        public virtual ICollection<Recruitment>? Recruitments { get; set; }
         public Employers()
         {
             Role= "Employer";

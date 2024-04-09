@@ -217,6 +217,7 @@ namespace job_search_be.Application.Service
                 new Claim(ClaimTypes.Email,user.Email),
                 new Claim(ClaimTypes.NameIdentifier,user.Job_SeekerId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role,user.Role)
             };
             claims.AddRange(audiences.Select(x => new Claim(JwtRegisteredClaimNames.Aud, x)));
             return claims;
@@ -297,6 +298,8 @@ namespace job_search_be.Application.Service
                     {
                         AccessToken = token.AccessToken,
                         AccessTokenExpiration = token.AccessTokenExpiration,
+                        RefreshToken=token.RefreshToken,
+                        RefreshTokenExpiration=token.RefreshTokenExpiration,
                         Role = token.Role
 
                     };
@@ -319,6 +322,8 @@ namespace job_search_be.Application.Service
                     {
                         AccessToken = token.AccessToken,
                         AccessTokenExpiration = token.AccessTokenExpiration,
+                        RefreshToken = token.RefreshToken,
+                        RefreshTokenExpiration = token.RefreshTokenExpiration,
                         Role = token.Role
                     };
                     return new DataResponse<TokenDto>(tokenres, 200, "Đăng nhập thành công");
@@ -339,5 +344,34 @@ namespace job_search_be.Application.Service
             return false;
         }
 
+        public DataResponse<UploadCV> UploadCv(UploadCV uploadCV, string url)
+        {
+            var item = _job_SeekerRepository.GetById(uploadCV.Job_SeekerId);
+            if(uploadCV.DeleteCv != null) 
+            {
+                string[] path = uploadCV.DeleteCv.Split(url);
+                if (!string.IsNullOrEmpty(path[1]))
+                {
+                    FileUploadService.DeletePDF(path[1]);
+                }
+                uploadCV.Job_Cv = "";
+            }
+            if (uploadCV.cv != null)
+            {
+                if (item.Job_Cv != null || item.Job_Cv == "string")
+                {
+                    string[] path = item.Job_Cv.Split(url);
+                    if (!string.IsNullOrEmpty(path[1]))
+                    {
+                        FileUploadService.DeletePDF(path[1]);
+                    }
+                    FileUploadService.DeletePDF(item.Job_Cv);
+                }
+                uploadCV.Job_Cv = url + FileUploadService.CreatePDF(uploadCV.cv);
+            }
+            var newData = _job_SeekerRepository.Update(_mapper.Map(uploadCV, item));
+            return new DataResponse<UploadCV>(_mapper.Map<UploadCV>(newData), HttpStatusCode.OK, HttpStatusMessages.UpdatedSuccessfully);
+
+        }
     }
 }

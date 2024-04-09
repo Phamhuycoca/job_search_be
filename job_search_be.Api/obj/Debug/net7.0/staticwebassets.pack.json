@@ -13,10 +13,6 @@
       "PackagePath": "staticwebassets\\PDFs\\43ef9685-c055-41ec-8d41-d9b3228016ef.pdf"
     },
     {
-      "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\56a9c13b-d178-4143-9c62-c9f6d9843eab.pdf",
-      "PackagePath": "staticwebassets\\PDFs\\56a9c13b-d178-4143-9c62-c9f6d9843eab.pdf"
-    },
-    {
       "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\835c347c-b414-4e3b-ad4b-77d0215d2e30.pdf",
       "PackagePath": "staticwebassets\\PDFs\\835c347c-b414-4e3b-ad4b-77d0215d2e30.pdf"
     },
@@ -31,6 +27,10 @@
     {
       "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\dfcc63a9-3808-4560-a9cc-7918a94719ba.pdf",
       "PackagePath": "staticwebassets\\PDFs\\dfcc63a9-3808-4560-a9cc-7918a94719ba.pdf"
+    },
+    {
+      "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\e8882a15-429d-4ae2-883d-87712f6dbff4.pdf",
+      "PackagePath": "staticwebassets\\PDFs\\e8882a15-429d-4ae2-883d-87712f6dbff4.pdf"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.job_search_be.Api.props",

@@ -5,10 +5,13 @@ using job_search_be.Domain.Dto.Job_Seeker;
 using job_search_be.Domain.Repositories;
 using job_search_be.Infrastructure.Exceptions;
 using job_search_be.Infrastructure.Settings;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace job_search_be.Api.Controllers.Auth
 {
@@ -81,6 +84,15 @@ namespace job_search_be.Api.Controllers.Auth
         public IActionResult GoogleLogin([FromBody] GoogleLoginRequest request)
         {
             return Ok(_jobService.Job_SeekerLoginByGoole(request));
+        }
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync();
+            HttpContext.Request.Headers.Clear();
+            HttpContext.Items.Clear();
+            HttpContext.User = null;
+            return Ok(new { success = true, data = "", statusCode = 200, message="Đăng xuất thành công" });
         }
     }
 }

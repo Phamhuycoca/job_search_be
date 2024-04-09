@@ -469,6 +469,59 @@ namespace job_search_be.Infrastructure.Migrations
                     b.ToTable("Professions", (string)null);
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Recruitment", b =>
+                {
+                    b.Property<Guid>("RecruitmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("EmployersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("JobId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Job_SeekerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RecruitmentDateTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RecruitmentId");
+
+                    b.HasIndex("EmployersId");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("Job_SeekerId");
+
+                    b.ToTable("Recruitment", (string)null);
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Refresh_Token", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -740,6 +793,30 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("Job_Seeker");
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Recruitment", b =>
+                {
+                    b.HasOne("job_search_be.Domain.Entity.Employers", "Employers")
+                        .WithMany("Recruitments")
+                        .HasForeignKey("EmployersId")
+                        .IsRequired();
+
+                    b.HasOne("job_search_be.Domain.Entity.Job", "Job")
+                        .WithMany("Recruitments")
+                        .HasForeignKey("JobId")
+                        .IsRequired();
+
+                    b.HasOne("job_search_be.Domain.Entity.Job_Seeker", "Job_Seeker")
+                        .WithMany("Recruitments")
+                        .HasForeignKey("Job_SeekerId")
+                        .IsRequired();
+
+                    b.Navigation("Employers");
+
+                    b.Navigation("Job");
+
+                    b.Navigation("Job_Seeker");
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Refresh_Token", b =>
                 {
                     b.HasOne("job_search_be.Domain.Entity.User", "User")
@@ -770,6 +847,8 @@ namespace job_search_be.Infrastructure.Migrations
                 {
                     b.Navigation("Jobs");
 
+                    b.Navigation("Recruitments");
+
                     b.Navigation("Refresh_Tokens");
                 });
 
@@ -778,8 +857,15 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("Jobs");
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Job", b =>
+                {
+                    b.Navigation("Recruitments");
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Job_Seeker", b =>
                 {
+                    b.Navigation("Recruitments");
+
                     b.Navigation("Refresh_Tokens");
                 });
 

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WISG4SmsoiVo+0x/iAmXIeI1BvSVvMwlGLj6s1UeAcw=",
+  "Hash": "oQbZbTo/E1HshCW6xVx5LQZYyc5lt6Hml/TTa3f0Z9o=",
   "Source": "job_search_be.Api",
   "BasePath": "_content/job_search_be.Api",
   "Mode": "Default",
@@ -66,23 +66,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PDFs\\43ef9685-c055-41ec-8d41-d9b3228016ef.pdf"
-    },
-    {
-      "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\56a9c13b-d178-4143-9c62-c9f6d9843eab.pdf",
-      "SourceId": "job_search_be.Api",
-      "SourceType": "Discovered",
-      "ContentRoot": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\",
-      "BasePath": "_content/job_search_be.Api",
-      "RelativePath": "PDFs/56a9c13b-d178-4143-9c62-c9f6d9843eab.pdf",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\PDFs\\56a9c13b-d178-4143-9c62-c9f6d9843eab.pdf"
     },
     {
       "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\835c347c-b414-4e3b-ad4b-77d0215d2e30.pdf",
@@ -151,6 +134,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PDFs\\dfcc63a9-3808-4560-a9cc-7918a94719ba.pdf"
+    },
+    {
+      "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\e8882a15-429d-4ae2-883d-87712f6dbff4.pdf",
+      "SourceId": "job_search_be.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\",
+      "BasePath": "_content/job_search_be.Api",
+      "RelativePath": "PDFs/e8882a15-429d-4ae2-883d-87712f6dbff4.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PDFs\\e8882a15-429d-4ae2-883d-87712f6dbff4.pdf"
     }
   ]
 }

@@ -8,6 +8,7 @@ using job_search_be.Domain.Dto.Job_Seeker;
 using job_search_be.Domain.Dto.Levelwork;
 using job_search_be.Domain.Dto.Permission;
 using job_search_be.Domain.Dto.Profession;
+using job_search_be.Domain.Dto.Recruitment;
 using job_search_be.Domain.Dto.Role;
 using job_search_be.Domain.Dto.Salary;
 using job_search_be.Domain.Dto.User;
@@ -70,9 +71,14 @@ namespace job_search_be.Domain.Mapping
             CreateMap<Job_Seeker, Job_SeekerDto>().ReverseMap();
             CreateMap<Job_Seeker, Job_SeekerQuery>().ReverseMap();
             CreateMap<Job_Seeker, Job_SeekerUpdateDto>().ReverseMap();
+            CreateMap<Job_Seeker, UploadCV>().ReverseMap();
 
             CreateMap<Job_Seeker, Job_Seeker_Login>().ReverseMap();
             CreateMap<Job_Seeker_Refresh_Token, Job_Seeker_Refresh_TokenDto>().ReverseMap();
+
+            CreateMap<Recruitment, RecruitmentDto>().ReverseMap();
+            CreateMap<Recruitment, RecruitmentQuery>().ReverseMap();
+            CreateMap<Recruitment, RecruitmentList>().ReverseMap();
         }
     }
 }

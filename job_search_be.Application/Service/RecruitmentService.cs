@@ -1,0 +1,133 @@
+﻿using AutoMapper;
+using job_search_be.Application.Helpers;
+using job_search_be.Application.IService;
+using job_search_be.Application.Wrappers.Concrete;
+using job_search_be.Domain.Dto.City;
+using job_search_be.Domain.Dto.Job;
+using job_search_be.Domain.Dto.Job_Seeker;
+using job_search_be.Domain.Dto.Recruitment;
+using job_search_be.Domain.Entity;
+using job_search_be.Domain.Repositories;
+using job_search_be.Infrastructure.Exceptions;
+using job_search_be.Infrastructure.Repositories;
+using job_search_be.Infrastructure.Settings;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace job_search_be.Application.Service
+{
+    public class RecruitmentService : IRecruitmentService
+    {
+        private readonly IRecruitmentRepository _recruitmentRepository;
+        private readonly IMapper _mapper;
+        private readonly IEmployersRepository _employersRepository;
+        private readonly IJobRepository _jobRepository;
+        private readonly IJob_SeekerRepository _jobSeekerRepository;
+        public RecruitmentService(IRecruitmentRepository recruitmentRepository, IMapper mapper, IEmployersRepository employersRepository, IJobRepository jobRepository, IJob_SeekerRepository job_SeekerRepository)
+        {
+            _recruitmentRepository = recruitmentRepository;
+            _mapper = mapper;
+            _employersRepository = employersRepository;
+            _jobRepository = jobRepository;
+            _jobSeekerRepository = job_SeekerRepository;
+        }
+
+        public DataResponse<RecruitmentQuery> Create(RecruitmentDto dto)
+        {
+            dto.RecruitmentId = Guid.NewGuid();
+            dto.IsStatus = false;
+            dto.RecruitmentDateTime = DateTime.Today.AddDays(1).AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second).ToString();
+            var checkJob = _recruitmentRepository.GetAllData().Where(x => x.JobId == dto.JobId).SingleOrDefault();
+            if (checkJob != null)
+            {
+                throw new ApiException(HttpStatusCode.BAD_REQUEST, "Công việc đã được ứng tuyển");
+            }
+            var newData = _recruitmentRepository.Create(_mapper.Map<Recruitment>(dto));
+            if (newData != null)
+            {
+                return new DataResponse<RecruitmentQuery>(_mapper.Map<RecruitmentQuery>(newData), HttpStatusCode.OK, "Ứng tuyển công việc thành công");
+            }
+            throw new ApiException(HttpStatusCode.BAD_REQUEST, "Ứng tuyển công việc thất bại");
+        }
+
+        public DataResponse<RecruitmentQuery> Delete(Guid id)
+        {
+            var item = _recruitmentRepository.GetById(id);
+            if (item == null)
+            {
+                throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            var data = _recruitmentRepository.Delete(id);
+            if (data != null)
+            {
+                return new DataResponse<RecruitmentQuery>(_mapper.Map<RecruitmentQuery>(item), HttpStatusCode.OK, HttpStatusMessages.DeletedSuccessfully);
+            }
+            throw new ApiException(HttpStatusCode.BAD_REQUEST, HttpStatusMessages.DeletedError);
+        }
+
+        public DataResponse<RecruitmentQuery> GetById(Guid id)
+        {
+            var item = _recruitmentRepository.GetById(id);
+            if (item == null)
+            {
+                throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            return new DataResponse<RecruitmentQuery>(_mapper.Map<RecruitmentQuery>(item), HttpStatusCode.OK, HttpStatusMessages.OK);
+        }
+
+        public PagedDataResponse<RecruitmentQuery> Items(CommonListQuery commonList, Guid id)
+        {
+            var query = _mapper.Map<List<RecruitmentQuery>>(_recruitmentRepository.GetAllData().Where(e => e.Job_SeekerId == id));
+            var paginatedResult = PaginatedList<RecruitmentQuery>.ToPageList(query, commonList.page, commonList.limit);
+            return new PagedDataResponse<RecruitmentQuery>(paginatedResult, 200, query.Count());
+        }
+
+        public PagedDataResponse<RecruitmentList> ItemsByEmployer(CommonListQuery commonList, Guid id)
+        {
+            //var query = _mapper.Map<List<RecruitmentList>>(_recruitmentRepository.GetAllData().Where(e => e.EmployersId == id));
+            var recruiments = _mapper.Map<List<RecruitmentQuery>>(_recruitmentRepository.GetAllData().Where(e => e.EmployersId == id));
+            var jobs = _mapper.Map<List<JobQuery>>(_jobRepository.GetAllData());
+            var jobseekers = _mapper.Map<List<Job_SeekerQuery>>(_jobSeekerRepository.GetAllData());
+            var query = from recruiment in recruiments
+                        join
+                        job in jobs on recruiment.JobId
+                        equals job.JobId
+                        join
+                        jobseeker in jobseekers on recruiment.Job_SeekerId equals jobseeker.Job_SeekerId
+                        select new RecruitmentList
+                        {
+                            JobId = job.JobId,
+                            Avatar =jobseeker.Avatar,
+                            FullName=jobseeker.FullName,
+                            Content=recruiment.Content,
+                            EmployersId=recruiment.EmployersId,
+                            IsStatus=recruiment.IsStatus,
+                            JobName=job.JobName,
+                            Job_Cv=jobseeker.Job_Cv,
+                            Job_SeekerId = recruiment.Job_SeekerId,
+                            RecruitmentDateTime=recruiment.RecruitmentDateTime,
+                            RecruitmentId = recruiment.RecruitmentId
+                        };
+            var paginatedResult = PaginatedList<RecruitmentList>.ToPageList(_mapper.Map<List<RecruitmentList>>(query), commonList.page, commonList.limit);
+            return new PagedDataResponse<RecruitmentList>(paginatedResult, 200, query.Count());
+        }
+
+        public DataResponse<RecruitmentQuery> Update(RecruitmentDto dto)
+        {
+            var item = _recruitmentRepository.GetById(dto.RecruitmentId);
+            if (item == null)
+            {
+                throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            var newData = _recruitmentRepository.Update(_mapper.Map(dto, item));
+            if (newData != null)
+            {
+                return new DataResponse<RecruitmentQuery>(_mapper.Map<RecruitmentQuery>(newData), HttpStatusCode.OK, HttpStatusMessages.UpdatedSuccessfully);
+            }
+            throw new ApiException(HttpStatusCode.BAD_REQUEST, HttpStatusMessages.UpdatedError);
+        }
+    }
+}

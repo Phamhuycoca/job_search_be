@@ -60,5 +60,18 @@ namespace job_search_be.Api.Controllers.Job_Seeker
             }
             return Ok(_job_SeekerService.GetById(Guid.Parse(objId)));
         }
+        [Authorize]
+        [HttpPost("upload-cv")]
+        public IActionResult UploadCV([FromForm] UploadCV cv)
+        {
+            var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (objId == null)
+            {
+                throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
+            }
+            cv.Job_SeekerId = Guid.Parse(objId);
+            var url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+            return Ok(_job_SeekerService.UploadCv(cv, url));
+        }
     }
 }

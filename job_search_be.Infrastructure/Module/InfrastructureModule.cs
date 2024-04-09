@@ -33,6 +33,7 @@ namespace job_search_be.Infrastructure.Module
             services.AddScoped<ILevelworkRepository, LevelworkRepository>();
             services.AddScoped<IJob_SeekerRepository, JobSeekerRepository>();
             services.AddScoped<IJob_Seeker_Refresh_Token_Repository, Job_Seeker_Refresh_Token_Repository>();
+            services.AddScoped<IRecruitmentRepository, RecruitmentRepository>();
             return services;
         }
     }

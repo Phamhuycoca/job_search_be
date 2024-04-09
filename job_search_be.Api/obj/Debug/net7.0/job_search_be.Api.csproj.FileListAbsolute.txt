@@ -191,3 +191,4 @@ F:\job_search_be\job_search_be.Api\obj\Debug\net7.0\refint\job_search_be.Api.dll
 F:\job_search_be\job_search_be.Api\obj\Debug\net7.0\job_search_be.Api.pdb
 F:\job_search_be\job_search_be.Api\obj\Debug\net7.0\job_search_be.Api.genruntimeconfig.cache
 F:\job_search_be\job_search_be.Api\obj\Debug\net7.0\ref\job_search_be.Api.dll
+F:\job_search_be\job_search_be.Api\bin\Debug\net7.0\System.Net.WebSockets.WebSocketProtocol.dll
