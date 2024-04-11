@@ -19,9 +19,11 @@ namespace job_search_be.Domain.Entity
         public Job_Seeker? Job_Seeker { get; set; }
         public Job? Job { get; set; }
         public Employers? Employers { get; set; }
+        public bool? IsFeedback {  get; set; }
         public Recruitment() 
         {
             IsStatus = false;
+            IsFeedback = false;
         }
 
     }

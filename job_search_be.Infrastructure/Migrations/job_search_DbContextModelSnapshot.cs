@@ -481,6 +481,9 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<Guid>("EmployersId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool?>("IsFeedback")
+                        .HasColumnType("bit");
+
                     b.Property<bool?>("IsStatus")
                         .HasColumnType("bit");
 

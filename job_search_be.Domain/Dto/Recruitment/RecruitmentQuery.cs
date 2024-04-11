@@ -16,6 +16,8 @@ namespace job_search_be.Domain.Dto.Recruitment
         public string? RecruitmentDateTime { get; set; }
         public bool? IsStatus { get; set; }
         public string? Content { get; set; }
+        public bool? IsFeedback { get; set; }
+
 
     }
 }

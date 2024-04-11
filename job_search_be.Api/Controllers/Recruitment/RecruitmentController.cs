@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace job_search_be.Api.Controllers.Recruitment
 {
@@ -62,7 +63,7 @@ namespace job_search_be.Api.Controllers.Recruitment
         }
         [Authorize(Roles = "Employer")]
         [HttpGet("ItemsByEmployer")]
-        public IActionResult ItemsByEmployer([FromQuery] CommonListQuery query)
+        public IActionResult ItemsByEmployer([FromQuery] CommonQueryByHome query)
         {
             var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var role = HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
@@ -71,6 +72,37 @@ namespace job_search_be.Api.Controllers.Recruitment
                 throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
             }
             return Ok(_recruitmentService.ItemsByEmployer(query, Guid.Parse(objId)));
+        }
+        [Authorize(Roles = "Job_seeker")]
+        [HttpGet("ItemsByJob_seeker")]
+        public IActionResult ItemsByJob_seeker([FromQuery] CommonListQuery query)
+        {
+            var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;       
+            if (objId == null)
+            {
+                throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
+            }
+            return Ok(_recruitmentService.ItemsByJob_seeker(query, Guid.Parse(objId)));
+        }
+        [HttpPatch("ChangeFeedback")]
+        public IActionResult ChangeFeedback(RecruitmentChangeFeedback changeFeedback)
+        {
+            var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (objId == null)
+            {
+                throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
+            }
+            return Ok(_recruitmentService.ChangeFeedback(changeFeedback));
+        }
+        [HttpPatch("ChangeStatus")]
+        public IActionResult ChangeStatus(RecruitmentChangeStatus changeStatus)
+        {
+            var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (objId == null)
+            {
+                throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
+            }
+            return Ok(_recruitmentService.ChangeStatus(changeStatus));
         }
     }
 }

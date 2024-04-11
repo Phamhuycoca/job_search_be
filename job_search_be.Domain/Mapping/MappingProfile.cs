@@ -79,6 +79,8 @@ namespace job_search_be.Domain.Mapping
             CreateMap<Recruitment, RecruitmentDto>().ReverseMap();
             CreateMap<Recruitment, RecruitmentQuery>().ReverseMap();
             CreateMap<Recruitment, RecruitmentList>().ReverseMap();
+            CreateMap<Recruitment, RecruitmentChangeStatus>().ReverseMap();
+            CreateMap<Recruitment, RecruitmentChangeFeedback>().ReverseMap();
         }
     }
 }

@@ -11,8 +11,10 @@ using job_search_be.Domain.Repositories;
 using job_search_be.Infrastructure.Exceptions;
 using job_search_be.Infrastructure.Repositories;
 using job_search_be.Infrastructure.Settings;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,11 +37,41 @@ namespace job_search_be.Application.Service
             _jobSeekerRepository = job_SeekerRepository;
         }
 
+        public DataResponse<RecruitmentList> ChangeFeedback(RecruitmentChangeFeedback changeFeedback)
+        {
+            var item = _recruitmentRepository.GetById(changeFeedback.RecruitmentId);
+            if (item == null)
+            {
+                throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            var newData = _recruitmentRepository.Update(_mapper.Map(changeFeedback, item));
+            if (newData != null)
+            {
+                return new DataResponse<RecruitmentList>(_mapper.Map<RecruitmentList>(newData), HttpStatusCode.OK, HttpStatusMessages.UpdatedSuccessfully);
+            }
+            throw new ApiException(HttpStatusCode.BAD_REQUEST, HttpStatusMessages.UpdatedError);
+        }
+
+        public DataResponse<RecruitmentList> ChangeStatus(RecruitmentChangeStatus changeStatus)
+        {
+            var item = _recruitmentRepository.GetById(changeStatus.RecruitmentId);
+            if (item == null)
+            {
+                throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
+            }
+            var newData = _recruitmentRepository.Update(_mapper.Map(changeStatus, item));
+            if (newData != null)
+            {
+                return new DataResponse<RecruitmentList>(_mapper.Map<RecruitmentList>(newData), HttpStatusCode.OK, HttpStatusMessages.UpdatedSuccessfully);
+            }
+            throw new ApiException(HttpStatusCode.BAD_REQUEST, HttpStatusMessages.UpdatedError);
+        }
+
         public DataResponse<RecruitmentQuery> Create(RecruitmentDto dto)
         {
             dto.RecruitmentId = Guid.NewGuid();
             dto.IsStatus = false;
-            dto.RecruitmentDateTime = DateTime.Today.AddDays(1).AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second).ToString();
+            dto.RecruitmentDateTime = DateTime.Today.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
             var checkJob = _recruitmentRepository.GetAllData().Where(x => x.JobId == dto.JobId).SingleOrDefault();
             if (checkJob != null)
             {
@@ -85,10 +117,10 @@ namespace job_search_be.Application.Service
             return new PagedDataResponse<RecruitmentQuery>(paginatedResult, 200, query.Count());
         }
 
-        public PagedDataResponse<RecruitmentList> ItemsByEmployer(CommonListQuery commonList, Guid id)
+        public PagedDataResponse<RecruitmentList> ItemsByEmployer(CommonQueryByHome commonList, Guid id)
         {
             //var query = _mapper.Map<List<RecruitmentList>>(_recruitmentRepository.GetAllData().Where(e => e.EmployersId == id));
-            var recruiments = _mapper.Map<List<RecruitmentQuery>>(_recruitmentRepository.GetAllData().Where(e => e.EmployersId == id));
+            var recruiments = _mapper.Map<List<RecruitmentQuery>>(_recruitmentRepository.GetAllData());
             var jobs = _mapper.Map<List<JobQuery>>(_jobRepository.GetAllData());
             var jobseekers = _mapper.Map<List<Job_SeekerQuery>>(_jobSeekerRepository.GetAllData());
             var query = from recruiment in recruiments
@@ -97,6 +129,7 @@ namespace job_search_be.Application.Service
                         equals job.JobId
                         join
                         jobseeker in jobseekers on recruiment.Job_SeekerId equals jobseeker.Job_SeekerId
+                        where recruiment.EmployersId == id && recruiment.IsFeedback == false
                         select new RecruitmentList
                         {
                             JobId = job.JobId,
@@ -109,7 +142,64 @@ namespace job_search_be.Application.Service
                             Job_Cv=jobseeker.Job_Cv,
                             Job_SeekerId = recruiment.Job_SeekerId,
                             RecruitmentDateTime=recruiment.RecruitmentDateTime,
-                            RecruitmentId = recruiment.RecruitmentId
+                            RecruitmentId = recruiment.RecruitmentId,
+                            IsFeedback=recruiment.IsFeedback,
+                            FormofworkId=job.FormofworkId,
+                            ProfessionId=job.ProfessionId,
+                            WorkexperienceId = job.WorkexperienceId
+                        };
+            if (!string.IsNullOrEmpty(commonList.keyword))
+            {
+                query = query.Where(x =>
+                                         x.JobName.Contains(commonList.keyword));
+            }
+            if (!string.IsNullOrEmpty(commonList.professionId) && Guid.TryParse(commonList.professionId, out var professionId))
+            {
+                query = query.Where(x => x.ProfessionId.Equals(professionId));
+            }
+
+            if (!string.IsNullOrEmpty(commonList.workexperienceId) && Guid.TryParse(commonList.workexperienceId, out var workexperienceId))
+            {
+                query = query.Where(x => x.WorkexperienceId == workexperienceId);
+            }
+
+            if (!string.IsNullOrEmpty(commonList.formofworkId) && Guid.TryParse(commonList.formofworkId, out var formofworkId))
+            {
+                query = query.Where(x => x.FormofworkId == formofworkId);
+            }
+
+            var paginatedResult = PaginatedList<RecruitmentList>.ToPageList(_mapper.Map<List<RecruitmentList>>(query), commonList.page, commonList.limit);
+            return new PagedDataResponse<RecruitmentList>(paginatedResult, 200, query.Count());
+        }
+
+        public PagedDataResponse<RecruitmentList> ItemsByJob_seeker(CommonListQuery commonList, Guid id)
+        {
+            //var query = _mapper.Map<List<RecruitmentList>>(_recruitmentRepository.GetAllData().Where(e => e.EmployersId == id));
+            var recruiments = _mapper.Map<List<RecruitmentQuery>>(_recruitmentRepository.GetAllData());
+            var jobs = _mapper.Map<List<JobQuery>>(_jobRepository.GetAllData());
+            var jobseekers = _mapper.Map<List<Job_SeekerQuery>>(_jobSeekerRepository.GetAllData());
+            var query = from recruiment in recruiments
+                        join
+                        job in jobs on recruiment.JobId
+                        equals job.JobId
+                        join
+                        jobseeker in jobseekers on recruiment.Job_SeekerId equals jobseeker.Job_SeekerId
+                        where recruiment.Job_SeekerId == id && recruiment.IsFeedback == true
+                        select new RecruitmentList
+                        {
+                            JobId = job.JobId,
+                            Avatar = jobseeker.Avatar,
+                            FullName = jobseeker.FullName,
+                            Content = recruiment.Content,
+                            EmployersId = recruiment.EmployersId,
+                            IsStatus = recruiment.IsStatus,
+                            JobName = job.JobName,
+                            Job_Cv = jobseeker.Job_Cv,
+                            Job_SeekerId = recruiment.Job_SeekerId,
+                            RecruitmentDateTime = recruiment.RecruitmentDateTime,
+                            RecruitmentId = recruiment.RecruitmentId,
+                            IsFeedback = recruiment.IsFeedback,
+
                         };
             var paginatedResult = PaginatedList<RecruitmentList>.ToPageList(_mapper.Map<List<RecruitmentList>>(query), commonList.page, commonList.limit);
             return new PagedDataResponse<RecruitmentList>(paginatedResult, 200, query.Count());

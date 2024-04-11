@@ -18,7 +18,10 @@ namespace job_search_be.Application.IService
         DataResponse<RecruitmentQuery> Update(RecruitmentDto dto);
         DataResponse<RecruitmentQuery> Delete(Guid id);
         DataResponse<RecruitmentQuery> GetById(Guid id);
-        PagedDataResponse<RecruitmentList> ItemsByEmployer(CommonListQuery commonList, Guid id);
+        PagedDataResponse<RecruitmentList> ItemsByEmployer(CommonQueryByHome commonList, Guid id);
+        PagedDataResponse<RecruitmentList> ItemsByJob_seeker(CommonListQuery commonList, Guid id);
+        DataResponse<RecruitmentList> ChangeStatus(RecruitmentChangeStatus changeStatus);
+        DataResponse<RecruitmentList> ChangeFeedback(RecruitmentChangeFeedback changeFeedback);
 
     }
 }
