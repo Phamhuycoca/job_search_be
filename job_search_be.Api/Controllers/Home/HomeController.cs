@@ -24,6 +24,11 @@ namespace job_search_be.Api.Controllers.Home
         {
             return Ok(_jobService.ItemById(id));
         }
+        [HttpGet("RelatedJobs/{id}")]
+        public IActionResult RelatedJobs([FromQuery] CommonQueryByHome queryByHome,Guid id)
+        {
+            return Ok(_jobService.RelatedJobs(queryByHome,id));
+        }
 
     }
 }

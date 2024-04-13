@@ -72,11 +72,11 @@ namespace job_search_be.Application.Service
             dto.RecruitmentId = Guid.NewGuid();
             dto.IsStatus = false;
             dto.RecruitmentDateTime = DateTime.Today.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-            var checkJob = _recruitmentRepository.GetAllData().Where(x => x.JobId == dto.JobId).SingleOrDefault();
+           /* var checkJob = _recruitmentRepository.GetAllData().Where(x => x.JobId == dto.JobId).SingleOrDefault();
             if (checkJob != null)
             {
                 throw new ApiException(HttpStatusCode.BAD_REQUEST, "Công việc đã được ứng tuyển");
-            }
+            }*/
             var newData = _recruitmentRepository.Create(_mapper.Map<Recruitment>(dto));
             if (newData != null)
             {
