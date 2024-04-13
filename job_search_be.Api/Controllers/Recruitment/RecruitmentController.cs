@@ -73,6 +73,18 @@ namespace job_search_be.Api.Controllers.Recruitment
             }
             return Ok(_recruitmentService.ItemsByEmployer(query, Guid.Parse(objId)));
         }
+        [Authorize(Roles = "Employer")]
+        [HttpGet("ItemsByEmployerSuitable")]
+        public IActionResult ItemsByEmployerSuitable([FromQuery] CommonQueryByHome query)
+        {
+            var objId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var role = HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
+            if (objId == null)
+            {
+                throw new ApiException(HttpStatusCode.FORBIDDEN, HttpStatusMessages.Forbidden);
+            }
+            return Ok(_recruitmentService.ItemsByEmployerSuitable(query, Guid.Parse(objId)));
+        }
         [Authorize(Roles = "Job_seeker")]
         [HttpGet("ItemsByJob_seeker")]
         public IActionResult ItemsByJob_seeker([FromQuery] CommonListQuery query)

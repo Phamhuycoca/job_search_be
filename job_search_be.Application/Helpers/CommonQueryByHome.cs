@@ -16,6 +16,7 @@ namespace job_search_be.Application.Helpers
         public string workexperienceId { get; set; }
         public string formofworkId { get; set; }
         public string keyword { get; set; }
+        public string? levelworkId {  get; set; }
         public CommonQueryByHome() 
         {
             page = 1;
@@ -26,6 +27,7 @@ namespace job_search_be.Application.Helpers
             workexperienceId = "";
             formofworkId = "";
             keyword = "";
+            levelworkId = "";
         }
     }
 }

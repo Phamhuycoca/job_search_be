@@ -217,6 +217,9 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<Guid?>("FormofworkId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("JobDescription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("JobName")
                         .HasColumnType("nvarchar(max)");
 

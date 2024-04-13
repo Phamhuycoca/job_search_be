@@ -11,6 +11,7 @@ namespace job_search_be.Domain.Dto.Job
     {
         public Guid JobId { get; set; }
         public string? JobName { get; set; }
+        public string? JobDescription { get; set; }
         public string? RequestJob { get; set; }
         public string? BenefitsJob { get; set; }
         public string? AddressJob { get; set; }

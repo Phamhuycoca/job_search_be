@@ -19,5 +19,11 @@ namespace job_search_be.Api.Controllers.Home
         {
             return Ok(_jobService.ItemsByHome(queryByHome));
         }
+        [HttpGet("ItemById/{id}")]
+        public IActionResult ItemById(Guid id)
+        {
+            return Ok(_jobService.ItemById(id));
+        }
+
     }
 }
