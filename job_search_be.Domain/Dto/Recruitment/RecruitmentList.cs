@@ -11,6 +11,7 @@ namespace job_search_be.Domain.Dto.Recruitment
         public Guid RecruitmentId { get; set; }
         public Guid? Job_SeekerId { get; set; }
         public string? FullName { get; set; }
+        public string? CompanyLogo { get; set; }
         public string? Job_Cv { get; set; }
         public Guid? JobId { get; set; }
         public string? Avatar { get; set; }

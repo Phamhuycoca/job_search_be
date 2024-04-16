@@ -23,7 +23,7 @@ namespace job_search_be.Domain.Entity
         public Recruitment() 
         {
             IsStatus = false;
-            IsFeedback = false;
+            IsFeedback = null;
         }
 
     }
