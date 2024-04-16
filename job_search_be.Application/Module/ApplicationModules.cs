@@ -39,6 +39,7 @@ namespace job_search_be.Application.Module
             services.AddScoped<ILevelworkService, LevelworkService>();
             services.AddScoped<IJob_SeekerService, Job_SeekerService>();
             services.AddScoped<IRecruitmentService, RecruitmentService>();
+            services.AddScoped<IFileCvService, FileCvService>();
             return services;
         }
     }

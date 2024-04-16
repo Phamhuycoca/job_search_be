@@ -161,6 +161,49 @@ namespace job_search_be.Infrastructure.Migrations
                     b.ToTable("Employers_Refresh_Token", (string)null);
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.FileCv", b =>
+                {
+                    b.Property<Guid>("FileCvId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FileCVName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileCvPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HostPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("Job_SeekerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("createdAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("createdBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("deletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("deletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("updatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("updatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FileCvId");
+
+                    b.HasIndex("Job_SeekerId");
+
+                    b.ToTable("FileCv", (string)null);
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Formofwork", b =>
                 {
                     b.Property<Guid>("FormofworkId")
@@ -744,6 +787,15 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("Employers");
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.FileCv", b =>
+                {
+                    b.HasOne("job_search_be.Domain.Entity.Job_Seeker", "Job_Seeker")
+                        .WithMany("FileCvs")
+                        .HasForeignKey("Job_SeekerId");
+
+                    b.Navigation("Job_Seeker");
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Job", b =>
                 {
                     b.HasOne("job_search_be.Domain.Entity.City", "City")
@@ -870,6 +922,8 @@ namespace job_search_be.Infrastructure.Migrations
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Job_Seeker", b =>
                 {
+                    b.Navigation("FileCvs");
+
                     b.Navigation("Recruitments");
 
                     b.Navigation("Refresh_Tokens");

@@ -34,6 +34,7 @@ namespace job_search_be.Infrastructure.Module
             services.AddScoped<IJob_SeekerRepository, JobSeekerRepository>();
             services.AddScoped<IJob_Seeker_Refresh_Token_Repository, Job_Seeker_Refresh_Token_Repository>();
             services.AddScoped<IRecruitmentRepository, RecruitmentRepository>();
+            services.AddScoped<IFileCvRepository, FileCvRepository>();
             return services;
         }
     }

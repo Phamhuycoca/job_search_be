@@ -1,8 +1,16 @@
 {
   "Files": [
     {
+      "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\0d9fa6a1-5eab-4226-9f4d-f3dbff9aa186.pdf",
+      "PackagePath": "staticwebassets\\PDFs\\0d9fa6a1-5eab-4226-9f4d-f3dbff9aa186.pdf"
+    },
+    {
       "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\1ad38c35-2e59-4055-b10e-dabfe0132df8.pdf",
       "PackagePath": "staticwebassets\\PDFs\\1ad38c35-2e59-4055-b10e-dabfe0132df8.pdf"
+    },
+    {
+      "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\3105fff6-15a3-4a14-a248-7faba56cffca.pdf",
+      "PackagePath": "staticwebassets\\PDFs\\3105fff6-15a3-4a14-a248-7faba56cffca.pdf"
     },
     {
       "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\3495280c-0ec6-4225-be9c-04aafde92b04.pdf",
@@ -25,8 +33,16 @@
       "PackagePath": "staticwebassets\\PDFs\\899da5ce-57ee-423f-a8d6-6a6732ce880a.pdf"
     },
     {
+      "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\8d2473c1-27db-4de5-a558-94bf194190cb.pdf",
+      "PackagePath": "staticwebassets\\PDFs\\8d2473c1-27db-4de5-a558-94bf194190cb.pdf"
+    },
+    {
       "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\c3e29550-cc8c-47de-9a69-0a4b7fed1b62.pdf",
       "PackagePath": "staticwebassets\\PDFs\\c3e29550-cc8c-47de-9a69-0a4b7fed1b62.pdf"
+    },
+    {
+      "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\d55621c3-c9da-4978-8084-074d9bc110d6.pdf",
+      "PackagePath": "staticwebassets\\PDFs\\d55621c3-c9da-4978-8084-074d9bc110d6.pdf"
     },
     {
       "Id": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\dfcc63a9-3808-4560-a9cc-7918a94719ba.pdf",

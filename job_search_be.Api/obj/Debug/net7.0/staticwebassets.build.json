@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "anwuJtKlAhbVYuxZdT32HupZl8+WnhgUTsGSUJ8igis=",
+  "Hash": "Pzw7NyW518fYBxFz2SYM/Xwkm3kRfFRkKiegNYTjU9E=",
   "Source": "job_search_be.Api",
   "BasePath": "_content/job_search_be.Api",
   "Mode": "Default",
@@ -17,6 +17,23 @@
   ],
   "Assets": [
     {
+      "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\0d9fa6a1-5eab-4226-9f4d-f3dbff9aa186.pdf",
+      "SourceId": "job_search_be.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\",
+      "BasePath": "_content/job_search_be.Api",
+      "RelativePath": "PDFs/0d9fa6a1-5eab-4226-9f4d-f3dbff9aa186.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PDFs\\0d9fa6a1-5eab-4226-9f4d-f3dbff9aa186.pdf"
+    },
+    {
       "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\1ad38c35-2e59-4055-b10e-dabfe0132df8.pdf",
       "SourceId": "job_search_be.Api",
       "SourceType": "Discovered",
@@ -32,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PDFs\\1ad38c35-2e59-4055-b10e-dabfe0132df8.pdf"
+    },
+    {
+      "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\3105fff6-15a3-4a14-a248-7faba56cffca.pdf",
+      "SourceId": "job_search_be.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\",
+      "BasePath": "_content/job_search_be.Api",
+      "RelativePath": "PDFs/3105fff6-15a3-4a14-a248-7faba56cffca.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PDFs\\3105fff6-15a3-4a14-a248-7faba56cffca.pdf"
     },
     {
       "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\3495280c-0ec6-4225-be9c-04aafde92b04.pdf",
@@ -119,6 +153,23 @@
       "OriginalItemSpec": "wwwroot\\PDFs\\899da5ce-57ee-423f-a8d6-6a6732ce880a.pdf"
     },
     {
+      "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\8d2473c1-27db-4de5-a558-94bf194190cb.pdf",
+      "SourceId": "job_search_be.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\",
+      "BasePath": "_content/job_search_be.Api",
+      "RelativePath": "PDFs/8d2473c1-27db-4de5-a558-94bf194190cb.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PDFs\\8d2473c1-27db-4de5-a558-94bf194190cb.pdf"
+    },
+    {
       "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\c3e29550-cc8c-47de-9a69-0a4b7fed1b62.pdf",
       "SourceId": "job_search_be.Api",
       "SourceType": "Discovered",
@@ -134,6 +185,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\PDFs\\c3e29550-cc8c-47de-9a69-0a4b7fed1b62.pdf"
+    },
+    {
+      "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\d55621c3-c9da-4978-8084-074d9bc110d6.pdf",
+      "SourceId": "job_search_be.Api",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\",
+      "BasePath": "_content/job_search_be.Api",
+      "RelativePath": "PDFs/d55621c3-c9da-4978-8084-074d9bc110d6.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PDFs\\d55621c3-c9da-4978-8084-074d9bc110d6.pdf"
     },
     {
       "Identity": "F:\\job_search_be\\job_search_be.Api\\wwwroot\\PDFs\\dfcc63a9-3808-4560-a9cc-7918a94719ba.pdf",

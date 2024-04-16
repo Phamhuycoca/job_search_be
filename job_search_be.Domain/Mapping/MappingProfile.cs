@@ -2,6 +2,7 @@
 using job_search_be.Domain.Dto.Auth;
 using job_search_be.Domain.Dto.City;
 using job_search_be.Domain.Dto.Employers;
+using job_search_be.Domain.Dto.FileCv;
 using job_search_be.Domain.Dto.Formofwork;
 using job_search_be.Domain.Dto.Job;
 using job_search_be.Domain.Dto.Job_Seeker;
@@ -82,6 +83,9 @@ namespace job_search_be.Domain.Mapping
             CreateMap<Recruitment, RecruitmentList>().ReverseMap();
             CreateMap<Recruitment, RecruitmentChangeStatus>().ReverseMap();
             CreateMap<Recruitment, RecruitmentChangeFeedback>().ReverseMap();
+
+            CreateMap<FileCv,FileCvDto>().ReverseMap();
+            CreateMap<FileCv,FileCvQuery>().ReverseMap();
         }
     }
 }
