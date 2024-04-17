@@ -12,7 +12,7 @@ namespace job_search_be.Application.IService
 {
     public interface IFileCvService
     {
-        PagedDataResponse<FileCvQuery> Items(CommonListQuery commonListQuery);
+        PagedDataResponse<FileCvQuery> Items(CommonListQuery commonListQuery, Guid id);
         DataResponse<FileCvQuery> Create(FileCvDto dto, string url);
         DataResponse<FileCvQuery> Update(FileCvDto dto, string url);
         DataResponse<FileCvQuery> Delete(Guid id);
