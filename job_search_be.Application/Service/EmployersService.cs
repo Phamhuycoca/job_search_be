@@ -343,6 +343,53 @@ namespace job_search_be.Application.Service
             var paginatedResult = PaginatedList<JobQueries>.ToPageList(items.ToList(), commonList.page, commonList.limit);
             return new PagedDataResponse<JobQueries>(paginatedResult, 200, items.Count());
         }
+
+        public PagedDataResponse<CompannyList> CompannyList(CommonQueryByHome commonQueryByHome)
+        {
+            var employers = _employersRepository.GetAllData();
+            var cities = _cityRepository.GetAllData();
+            var items = from employer in employers
+                        join
+                      city in cities on employer.CityId equals city.CityId
+                        select new CompannyList
+                        {
+                            CityId = employer.CityId,
+                            CityName=city.CityName,
+                            CompanyAddress = employer.CompanyAddress,
+                            CompanyName = employer.CompanyName,
+                            CompanyDescription = employer.CompanyDescription,
+                            CompanyLogo= employer.CompanyLogo,
+                            CompanyWebsite = employer.CompanyWebsite,
+                            ContactEmail = employer.ContactEmail,
+                            ContactPhoneNumber = employer.ContactPhoneNumber,
+                            createdAt=employer.createdAt,
+                            createdBy=employer.createdBy,
+                            deletedAt=employer.deletedAt,
+                            deletedBy=employer.deletedBy,
+                            Email=employer.Email,
+                            EmployersId=employer.EmployersId,
+                            updatedAt=employer.updatedAt,
+                            updatedBy=employer.updatedBy,
+
+                        };
+
+            if (!string.IsNullOrEmpty(commonQueryByHome.keyword))
+            {
+                items = items.Where(x =>
+                                         x.CompanyName.Contains(commonQueryByHome.keyword) ||
+                                         x.CompanyAddress.Contains(commonQueryByHome.keyword) ||
+                                         x.CityName.Contains(commonQueryByHome.keyword) ||
+                                         x.CompanyWebsite.Contains(commonQueryByHome.keyword) ||
+                                         x.CompanyName.Contains(commonQueryByHome.keyword));
+            }
+
+            if (!string.IsNullOrEmpty(commonQueryByHome.cityId) && Guid.TryParse(commonQueryByHome.cityId, out var cityId))
+            {
+                items = items.Where(x => x.CityId.Equals(cityId));
+            }
+            var paginatedResult = PaginatedList<CompannyList>.ToPageList(items.ToList(), commonQueryByHome.page, commonQueryByHome.limit);
+            return new PagedDataResponse<CompannyList>(paginatedResult, 200, items.Count());
+        }
     }
 }
  

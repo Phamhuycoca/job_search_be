@@ -17,6 +17,7 @@ namespace job_search_be.Application.IService
     public interface IEmployersService
     {
         PagedDataResponse<EmployersQuery> Items(CommonListQuery commonList);
+        PagedDataResponse<CompannyList> CompannyList(CommonQueryByHome commonQueryByHome);
         DataResponse<List<EmployersDto>> ItemsList();
         DataResponse<EmployersQuery> Create(EmployersDto dto);
         DataResponse<EmployersQuery> Update(EmployersUpdateDto dto);

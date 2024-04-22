@@ -81,5 +81,10 @@ namespace job_search_be.Api.Controllers.Employers
         {
             return Ok(_employersService.GetListJobById(query ,id));
         }
+        [HttpGet("CompannyList")]
+        public IActionResult CompannyList([FromQuery] CommonQueryByHome query)
+        {
+            return Ok(_employersService.CompannyList(query));
+        }
     }
 }
