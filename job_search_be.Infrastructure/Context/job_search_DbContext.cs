@@ -28,6 +28,7 @@ namespace job_search_be.Infrastructure.Context
         public virtual DbSet<Job_Seeker_Refresh_Token> Job_Seeker_Refresh_Tokens { get; set; }
         public virtual DbSet<Recruitment> Recruitments { get; set; }
         public virtual DbSet<FileCv> FileCvs { get; set; }
+        public virtual DbSet<Favourite> Favourites { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -132,6 +133,13 @@ namespace job_search_be.Infrastructure.Context
                 e.ToTable("FileCv");
                 e.HasKey(e => e.FileCvId);
                 e.HasOne(e => e.Job_Seeker).WithMany(x => x.FileCvs).HasForeignKey(e => e.Job_SeekerId).OnDelete(DeleteBehavior.ClientSetNull);
+            });
+            modelBuilder.Entity<Favourite>(e =>
+            {
+                e.ToTable("Favourite");
+                e.HasKey(e => e.FavouriteId);
+                e.HasOne(e => e.Job_Seeker).WithMany(x => x.Favorites).HasForeignKey(e => e.Job_SeekerId).OnDelete(DeleteBehavior.ClientSetNull);
+                e.HasOne(e => e.Job).WithMany(x => x.Favorites).HasForeignKey(e => e.JobId).OnDelete(DeleteBehavior.ClientSetNull);
             });
         }
     }

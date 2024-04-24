@@ -32,5 +32,7 @@ namespace job_search_be.Domain.Entity
         public Profession? Profession { get; set; }
         public Levelwork? Levelwork { get; set; }
         public virtual ICollection<Recruitment>? Recruitments { get; set; }
+        public virtual ICollection<Favourite>? Favorites { get; set; }
+
     }
 }
