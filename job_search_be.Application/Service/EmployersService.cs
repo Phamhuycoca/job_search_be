@@ -103,6 +103,7 @@ namespace job_search_be.Application.Service
             {
                 throw new ApiException(HttpStatusCode.ITEM_NOT_FOUND, HttpStatusMessages.NotFound);
             }
+            View(id);
             return new DataResponse<EmployersQuery>(_mapper.Map<EmployersQuery>(item), HttpStatusCode.OK, HttpStatusMessages.OK);
         }
 
@@ -389,6 +390,40 @@ namespace job_search_be.Application.Service
             }
             var paginatedResult = PaginatedList<CompannyList>.ToPageList(items.ToList(), commonQueryByHome.page, commonQueryByHome.limit);
             return new PagedDataResponse<CompannyList>(paginatedResult, 200, items.Count());
+        }
+
+       /* public DataResponse<CompannyView> GetCompannyView(Guid id)
+        {
+            var item = _employersRepository.GetById(id);
+            CompannyView result = new CompannyView();
+            if(item.View == null)
+            {
+            result.View = 1;
+            }
+            else
+            {
+                result.View = item.View + 1;
+            }
+            var newData = _employersRepository.Update(_mapper.Map(result,item));
+            if (newData != null)
+            {
+                return new DataResponse<CompannyView>(_mapper.Map<CompannyView>(newData), HttpStatusCode.OK, HttpStatusMessages.UpdatedSuccessfully);
+            }
+            throw new ApiException(HttpStatusCode.BAD_REQUEST, HttpStatusMessages.UpdatedError);
+        }*/
+        public void View(Guid id)
+        {
+            var item = _employersRepository.GetById(id);
+            CompannyView result = new CompannyView();
+            if (item.View == null)
+            {
+                result.View = 1;
+            }
+            else
+            {
+                result.View = item.View + 1;
+            }
+            var newData = _employersRepository.Update(_mapper.Map(result, item));
         }
     }
 }

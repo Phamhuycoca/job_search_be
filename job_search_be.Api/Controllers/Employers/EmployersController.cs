@@ -48,6 +48,7 @@ namespace job_search_be.Api.Controllers.Employers
         [HttpGet("{id}")]
         public IActionResult GetById(Guid id)
         {
+            //_employersService.GetCompannyView(id);
             return Ok(_employersService.GetById(id));
         }
         [HttpGet("ItemsList")]

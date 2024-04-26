@@ -99,6 +99,9 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("View")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
 
@@ -471,6 +474,9 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<string>("LevelworkName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("ProfessionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("createdAt")
                         .HasColumnType("datetime2");
 
@@ -490,6 +496,8 @@ namespace job_search_be.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LevelworkId");
+
+                    b.HasIndex("ProfessionId");
 
                     b.ToTable("Levelworks", (string)null);
                 });
@@ -910,6 +918,16 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("Job_Seeker");
                 });
 
+            modelBuilder.Entity("job_search_be.Domain.Entity.Levelwork", b =>
+                {
+                    b.HasOne("job_search_be.Domain.Entity.Profession", "Profession")
+                        .WithMany("Levelworks")
+                        .HasForeignKey("ProfessionId")
+                        .IsRequired();
+
+                    b.Navigation("Profession");
+                });
+
             modelBuilder.Entity("job_search_be.Domain.Entity.Recruitment", b =>
                 {
                     b.HasOne("job_search_be.Domain.Entity.Employers", "Employers")
@@ -1000,6 +1018,8 @@ namespace job_search_be.Infrastructure.Migrations
             modelBuilder.Entity("job_search_be.Domain.Entity.Profession", b =>
                 {
                     b.Navigation("Jobs");
+
+                    b.Navigation("Levelworks");
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Role", b =>

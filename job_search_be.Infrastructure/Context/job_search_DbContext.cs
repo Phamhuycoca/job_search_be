@@ -107,6 +107,7 @@ namespace job_search_be.Infrastructure.Context
             {
                 e.ToTable("Levelworks");
                 e.HasKey(e => e.LevelworkId);
+                e.HasOne(e => e.Profession).WithMany(e => e.Levelworks).HasForeignKey(e => e.ProfessionId).OnDelete(DeleteBehavior.ClientSetNull);
             });
             modelBuilder.Entity<Job_Seeker>(e =>
             {

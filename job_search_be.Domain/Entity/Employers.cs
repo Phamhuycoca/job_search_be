@@ -17,6 +17,7 @@ namespace job_search_be.Domain.Entity
         public string? CompanyWebsite { get; set; }
         public string? CompanyDescription { get; set; }
         public string? CompanyLogo { get; set; }
+        public long? View { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
         public bool? IsActive { get; set; }
@@ -30,6 +31,7 @@ namespace job_search_be.Domain.Entity
         public Employers()
         {
             Role= "Employer";
+            View = 0;
         }
 
 }

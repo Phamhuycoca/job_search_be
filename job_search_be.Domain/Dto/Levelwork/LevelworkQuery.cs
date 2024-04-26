@@ -11,5 +11,6 @@ namespace job_search_be.Domain.Dto.Levelwork
     {
         public Guid LevelworkId { get; set; }
         public string? LevelworkName { get; set; }
+        public Guid ProfessionId { get; set; }
     }
 }

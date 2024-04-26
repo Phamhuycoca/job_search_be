@@ -12,5 +12,6 @@ namespace job_search_be.Domain.Entity
         public Guid ProfessionId { get; set; }
         public string? ProfessionName { get; set; }
         public ICollection<Job>? Jobs { get; set; }
+        public ICollection<Levelwork>? Levelworks { get; set;}
     }
 }

@@ -26,6 +26,7 @@ namespace job_search_be.Application.IService
         DataResponse<TokenDto> Login(EmployersLogin dto);
         DataResponse<TokenDto> Refresh_Token(RefreshTokenSettings token);
         PagedDataResponse<JobQueries> GetListJobById(CommonListQuery commonList,Guid id);
+        //DataResponse<CompannyView> GetCompannyView(Guid id);
 
     }
 }

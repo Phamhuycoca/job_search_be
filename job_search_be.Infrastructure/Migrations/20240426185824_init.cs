@@ -76,24 +76,6 @@ namespace job_search_be.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Levelworks",
-                columns: table => new
-                {
-                    LevelworkId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LevelworkName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    createdBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    updatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    deletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    deletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Levelworks", x => x.LevelworkId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Permissions",
                 columns: table => new
                 {
@@ -197,6 +179,7 @@ namespace job_search_be.Infrastructure.Migrations
                     CompanyWebsite = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    View = table.Column<long>(type: "bigint", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: true),
@@ -218,6 +201,32 @@ namespace job_search_be.Infrastructure.Migrations
                         column: x => x.CityId,
                         principalTable: "Cities",
                         principalColumn: "CityId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileCv",
+                columns: table => new
+                {
+                    FileCvId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FileCVName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HostPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FileCvPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Job_SeekerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    createdBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    updatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    deletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    deletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileCv", x => x.FileCvId);
+                    table.ForeignKey(
+                        name: "FK_FileCv_Job_Seekers_Job_SeekerId",
+                        column: x => x.Job_SeekerId,
+                        principalTable: "Job_Seekers",
+                        principalColumn: "Job_SeekerId");
                 });
 
             migrationBuilder.CreateTable(
@@ -243,6 +252,30 @@ namespace job_search_be.Infrastructure.Migrations
                         column: x => x.Job_SeekerId,
                         principalTable: "Job_Seekers",
                         principalColumn: "Job_SeekerId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Levelworks",
+                columns: table => new
+                {
+                    LevelworkId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LevelworkName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfessionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    createdBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    updatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    deletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    deletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Levelworks", x => x.LevelworkId);
+                    table.ForeignKey(
+                        name: "FK_Levelworks_Professions_ProfessionId",
+                        column: x => x.ProfessionId,
+                        principalTable: "Professions",
+                        principalColumn: "ProfessionId");
                 });
 
             migrationBuilder.CreateTable(
@@ -393,6 +426,36 @@ namespace job_search_be.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Favoufite_Job",
+                columns: table => new
+                {
+                    Favoufite_Job_Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    JobId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsFavoufite_Job = table.Column<bool>(type: "bit", nullable: false),
+                    Job_SeekerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    createdBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    createdAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    updatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    updatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    deletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    deletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favoufite_Job", x => x.Favoufite_Job_Id);
+                    table.ForeignKey(
+                        name: "FK_Favoufite_Job_Job_Seekers_Job_SeekerId",
+                        column: x => x.Job_SeekerId,
+                        principalTable: "Job_Seekers",
+                        principalColumn: "Job_SeekerId");
+                    table.ForeignKey(
+                        name: "FK_Favoufite_Job_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "JobId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Recruitment",
                 columns: table => new
                 {
@@ -437,6 +500,21 @@ namespace job_search_be.Infrastructure.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Favoufite_Job_Job_SeekerId",
+                table: "Favoufite_Job",
+                column: "Job_SeekerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favoufite_Job_JobId",
+                table: "Favoufite_Job",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FileCv_Job_SeekerId",
+                table: "FileCv",
+                column: "Job_SeekerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Jobs_CityId",
                 table: "Jobs",
                 column: "CityId");
@@ -472,6 +550,11 @@ namespace job_search_be.Infrastructure.Migrations
                 column: "WorkexperienceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Levelworks_ProfessionId",
+                table: "Levelworks",
+                column: "ProfessionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Recruitment_EmployersId",
                 table: "Recruitment",
                 column: "EmployersId");
@@ -497,6 +580,12 @@ namespace job_search_be.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Employers_Refresh_Token");
+
+            migrationBuilder.DropTable(
+                name: "Favoufite_Job");
+
+            migrationBuilder.DropTable(
+                name: "FileCv");
 
             migrationBuilder.DropTable(
                 name: "Job_Seeker_Refresh_Tokens");
@@ -529,9 +618,6 @@ namespace job_search_be.Infrastructure.Migrations
                 name: "Levelworks");
 
             migrationBuilder.DropTable(
-                name: "Professions");
-
-            migrationBuilder.DropTable(
                 name: "Salaries");
 
             migrationBuilder.DropTable(
@@ -542,6 +628,9 @@ namespace job_search_be.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cities");
+
+            migrationBuilder.DropTable(
+                name: "Professions");
         }
     }
 }
