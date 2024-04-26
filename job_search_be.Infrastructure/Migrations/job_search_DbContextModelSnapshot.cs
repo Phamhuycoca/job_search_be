@@ -161,13 +161,13 @@ namespace job_search_be.Infrastructure.Migrations
                     b.ToTable("Employers_Refresh_Token", (string)null);
                 });
 
-            modelBuilder.Entity("job_search_be.Domain.Entity.Favourite", b =>
+            modelBuilder.Entity("job_search_be.Domain.Entity.Favoufite_Job", b =>
                 {
-                    b.Property<Guid>("FavouriteId")
+                    b.Property<Guid>("Favoufite_Job_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsFavourite")
+                    b.Property<bool>("IsFavoufite_Job")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("JobId")
@@ -194,13 +194,13 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Property<Guid?>("updatedBy")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("FavouriteId");
+                    b.HasKey("Favoufite_Job_Id");
 
                     b.HasIndex("JobId");
 
                     b.HasIndex("Job_SeekerId");
 
-                    b.ToTable("Favourite", (string)null);
+                    b.ToTable("Favoufite_Job", (string)null);
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.FileCv", b =>
@@ -829,15 +829,15 @@ namespace job_search_be.Infrastructure.Migrations
                     b.Navigation("Employers");
                 });
 
-            modelBuilder.Entity("job_search_be.Domain.Entity.Favourite", b =>
+            modelBuilder.Entity("job_search_be.Domain.Entity.Favoufite_Job", b =>
                 {
                     b.HasOne("job_search_be.Domain.Entity.Job", "Job")
-                        .WithMany("Favorites")
+                        .WithMany("Favoufite_Jobs")
                         .HasForeignKey("JobId")
                         .IsRequired();
 
                     b.HasOne("job_search_be.Domain.Entity.Job_Seeker", "Job_Seeker")
-                        .WithMany("Favorites")
+                        .WithMany("Favoufite_Jobs")
                         .HasForeignKey("Job_SeekerId")
                         .IsRequired();
 
@@ -976,14 +976,14 @@ namespace job_search_be.Infrastructure.Migrations
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Job", b =>
                 {
-                    b.Navigation("Favorites");
+                    b.Navigation("Favoufite_Jobs");
 
                     b.Navigation("Recruitments");
                 });
 
             modelBuilder.Entity("job_search_be.Domain.Entity.Job_Seeker", b =>
                 {
-                    b.Navigation("Favorites");
+                    b.Navigation("Favoufite_Jobs");
 
                     b.Navigation("FileCvs");
 
