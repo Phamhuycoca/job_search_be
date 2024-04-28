@@ -50,5 +50,10 @@ namespace job_search_be.Api.Controllers.Levelwork
         {
             return Ok(_levelworkService.ItemsList());
         }
+        [HttpGet("GetByProfession/{id}")]
+        public IActionResult GetByProfession(Guid id)
+        {
+            return Ok(_levelworkService.GetByProfession(id));
+        }
     }
 }

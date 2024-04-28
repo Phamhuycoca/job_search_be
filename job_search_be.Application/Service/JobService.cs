@@ -35,6 +35,7 @@ namespace job_search_be.Application.Service
         private readonly ISalaryRepository _aryRepository;
         private readonly IWorkexperienceRepository _workexperienceRepository;
         private readonly IEmployersRepository _employersRepository;
+        private readonly IFavoufite_JobRepository _favoufiteJobRepository;
         public JobService(IJobRepository jobRepository, IMapper mapper,
             IFormofworkRepository formofworkRepository,
             ILevelworkRepository levelworkRepository,
@@ -42,7 +43,8 @@ namespace job_search_be.Application.Service
             IProfessionRepository professionRepository,
             ISalaryRepository aryRepository,
             IWorkexperienceRepository workexperienceRepository,
-            IEmployersRepository employersRepository)
+            IEmployersRepository employersRepository, 
+            IFavoufite_JobRepository favoufiteJobRepository)
         {
             _jobRepository = jobRepository;
             _mapper = mapper;
@@ -53,6 +55,7 @@ namespace job_search_be.Application.Service
             _aryRepository = aryRepository;
             _workexperienceRepository = workexperienceRepository;
             _employersRepository = employersRepository;
+            _favoufiteJobRepository = favoufiteJobRepository;
         }
 
         public PagedDataResponse<JobQuery> Items(CommonListQuery commonListQuery, Guid objId)
@@ -254,7 +257,7 @@ namespace job_search_be.Application.Service
             var professions = _professionRepository.GetAllData();
             var cities = _cityRepository.GetAllData();
             var employers = _employersRepository.GetAllData();
-
+            var favourites=_favoufiteJobRepository.GetAllData();
             var items = from jobs in query
                         join salary in salaries on jobs.SalaryId equals salary.SalaryId
                         join formofwork in formofworks on jobs.FormofworkId equals formofwork.FormofworkId
@@ -262,7 +265,8 @@ namespace job_search_be.Application.Service
                         join workexperience in workexperiences on jobs.WorkexperienceId equals workexperience.WorkexperienceId
                         join profession in professions on jobs.ProfessionId equals profession.ProfessionId
                         join city in cities on jobs.CityId equals city.CityId
-                        join employer in employers on jobs.EmployersId equals employer.EmployersId
+                        join employer in employers on jobs.EmployersId 
+                        equals employer.EmployersId
                         select new JobQueries
                         {
                             JobId = jobs.JobId,
@@ -288,7 +292,6 @@ namespace job_search_be.Application.Service
                             CompanyLogo = employer.CompanyLogo,
                             CompanyName = employer.CompanyName,
                             JobDescription = jobs.JobDescription,
-
                         };
 
             if (!string.IsNullOrEmpty(queryByHome.keyword))
@@ -446,6 +449,97 @@ namespace job_search_be.Application.Service
                                          x.CompanyName.Contains(queryByHome.keyword));
             }
 
+
+            if (!string.IsNullOrEmpty(queryByHome.professionId) && Guid.TryParse(queryByHome.professionId, out var professionId))
+            {
+                items = items.Where(x => x.ProfessionId.Equals(professionId));
+            }
+            if (!string.IsNullOrEmpty(queryByHome.levelworkId) && Guid.TryParse(queryByHome.levelworkId, out var levelworkId))
+            {
+                items = items.Where(x => x.LevelworkId.Equals(levelworkId));
+            }
+            if (!string.IsNullOrEmpty(queryByHome.workexperienceId) && Guid.TryParse(queryByHome.workexperienceId, out var workexperienceId))
+            {
+                items = items.Where(x => x.WorkexperienceId == workexperienceId);
+            }
+
+            if (!string.IsNullOrEmpty(queryByHome.formofworkId) && Guid.TryParse(queryByHome.formofworkId, out var formofworkId))
+            {
+                items = items.Where(x => x.FormofworkId == formofworkId);
+            }
+
+            if (!string.IsNullOrEmpty(queryByHome.salaryId) && Guid.TryParse(queryByHome.salaryId, out var salaryId))
+            {
+                items = items.Where(x => x.SalaryId == salaryId);
+            }
+
+            if (!string.IsNullOrEmpty(queryByHome.cityId) && Guid.TryParse(queryByHome.cityId, out var cityId))
+            {
+                items = items.Where(x => x.CityId == cityId);
+            }
+
+            var paginatedResult = PaginatedList<JobQueries>.ToPageList(items.ToList(), queryByHome.page, queryByHome.limit);
+            return new PagedDataResponse<JobQueries>(paginatedResult, 200, items.Count());
+        }
+
+        public PagedDataResponse<JobQueries> ItemsByHomeById(CommonQueryByHome queryByHome, Guid id)
+        {
+            var query = _jobRepository.GetAllData().AsQueryable();
+            var salaries = _aryRepository.GetAllData();
+            var formofworks = _formofworkRepository.GetAllData();
+            var levelworks = _levelworkRepository.GetAllData();
+            var workexperiences = _workexperienceRepository.GetAllData();
+            var professions = _professionRepository.GetAllData();
+            var cities = _cityRepository.GetAllData();
+            var employers = _employersRepository.GetAllData();
+            var favourites = _favoufiteJobRepository.GetAllData().OrderByDescending(x=>x.Job_SeekerId==id);
+            var items = from jobs in query
+                        join salary in salaries on jobs.SalaryId equals salary.SalaryId
+                        join formofwork in formofworks on jobs.FormofworkId equals formofwork.FormofworkId
+                        join levelwork in levelworks on jobs.LevelworkId equals levelwork.LevelworkId
+                        join workexperience in workexperiences on jobs.WorkexperienceId equals workexperience.WorkexperienceId
+                        join profession in professions on jobs.ProfessionId equals profession.ProfessionId
+                        join city in cities on jobs.CityId equals city.CityId
+                        join favourite in favourites on jobs.JobId equals favourite.JobId
+                        join employer in employers on jobs.EmployersId equals employer.EmployersId
+                        select new JobQueries
+                        {
+                            JobId = jobs.JobId,
+                            JobName = jobs.JobName,
+                            RequestJob = jobs.RequestJob,
+                            BenefitsJob = jobs.BenefitsJob,
+                            AddressJob = jobs.AddressJob,
+                            WorkingTime = jobs.WorkingTime,
+                            ExpirationDate = jobs.ExpirationDate,
+                            WorkexperienceId = jobs.WorkexperienceId,
+                            WorkexperienceName = workexperience.WorkexperienceName,
+                            FormofworkId = jobs.FormofworkId,
+                            FormofworkName = formofwork.FormofworkName,
+                            CityId = jobs.CityId,
+                            CityName = city.CityName,
+                            SalaryId = jobs.SalaryId,
+                            SalaryPrice = salary.SalaryPrice,
+                            ProfessionId = jobs.ProfessionId,
+                            ProfessionName = profession.ProfessionName,
+                            LevelworkId = jobs.LevelworkId,
+                            LevelworkName = levelwork.LevelworkName,
+                            EmployersId = jobs.EmployersId,
+                            CompanyLogo = employer.CompanyLogo,
+                            CompanyName = employer.CompanyName,
+                            JobDescription = jobs.JobDescription,
+                            Favoufite_Job_Id=favourite.Favoufite_Job_Id,
+                            IsFavoufite_Job=favourite.IsFavoufite_Job
+                        };
+
+            if (!string.IsNullOrEmpty(queryByHome.keyword))
+            {
+                items = items.Where(x =>
+                                         x.JobName.Contains(queryByHome.keyword) ||
+                                         x.SalaryPrice.Contains(queryByHome.keyword) ||
+                                         x.CityName.Contains(queryByHome.keyword) ||
+                                         x.LevelworkName.Contains(queryByHome.keyword) ||
+                                         x.CompanyName.Contains(queryByHome.keyword));
+            }
 
             if (!string.IsNullOrEmpty(queryByHome.professionId) && Guid.TryParse(queryByHome.professionId, out var professionId))
             {

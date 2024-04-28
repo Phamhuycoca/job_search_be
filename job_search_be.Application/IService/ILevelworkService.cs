@@ -14,6 +14,7 @@ namespace job_search_be.Application.IService
     {
         PagedDataResponse<LevelworkQuery> Items(CommonListQuery commonList);
         DataResponse<List<LevelworkDto>> ItemsList();
+        DataResponse<List<LevelworkDto>> GetByProfession(Guid id);
         DataResponse<LevelworkQuery> Create(LevelworkDto dto);
         DataResponse<LevelworkQuery> Update(LevelworkDto dto);
         DataResponse<LevelworkQuery> Delete(Guid id);

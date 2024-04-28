@@ -31,5 +31,10 @@ namespace job_search_be.Domain.Dto.Job
         public string? LevelworkName { get; set; }
         public string? CompanyName { get; set; }
         public string? CompanyLogo { get; set; }
+
+        //favourite
+        public Guid Favoufite_Job_Id { get; set; }
+        public bool IsFavoufite_Job { get; set; }
+        public Guid Job_SeekerId { get; set; }
     }
 }

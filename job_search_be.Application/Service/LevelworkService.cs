@@ -63,6 +63,12 @@ namespace job_search_be.Application.Service
             return new DataResponse<LevelworkQuery>(_mapper.Map<LevelworkQuery>(item), HttpStatusCode.OK, HttpStatusMessages.OK);
         }
 
+        public DataResponse<List<LevelworkDto>> GetByProfession(Guid id)
+        {
+            var query = _mapper.Map<List<Levelwork>>(_levelworkRepository.GetAllData().Where(x=>x.ProfessionId==id).ToList());
+            return new DataResponse<List<LevelworkDto>>(_mapper.Map<List<LevelworkDto>>(query), HttpStatusCode.OK, HttpStatusMessages.OK);
+        }
+
         public PagedDataResponse<LevelworkQuery> Items(CommonListQuery commonList)
         {
             var query = _mapper.Map<List<LevelworkQuery>>(_levelworkRepository.GetAllData());
