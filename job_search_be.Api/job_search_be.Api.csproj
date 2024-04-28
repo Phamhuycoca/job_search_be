@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Favoufite\" />
     <Folder Include="Infrastructure\Filters\" />
     <Folder Include="wwwroot\PDFs\" />
   </ItemGroup>

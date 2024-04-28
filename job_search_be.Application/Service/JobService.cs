@@ -492,7 +492,6 @@ namespace job_search_be.Application.Service
             var professions = _professionRepository.GetAllData();
             var cities = _cityRepository.GetAllData();
             var employers = _employersRepository.GetAllData();
-            var favourites = _favoufiteJobRepository.GetAllData().OrderByDescending(x=>x.Job_SeekerId==id);
             var items = from jobs in query
                         join salary in salaries on jobs.SalaryId equals salary.SalaryId
                         join formofwork in formofworks on jobs.FormofworkId equals formofwork.FormofworkId
@@ -500,7 +499,6 @@ namespace job_search_be.Application.Service
                         join workexperience in workexperiences on jobs.WorkexperienceId equals workexperience.WorkexperienceId
                         join profession in professions on jobs.ProfessionId equals profession.ProfessionId
                         join city in cities on jobs.CityId equals city.CityId
-                        join favourite in favourites on jobs.JobId equals favourite.JobId
                         join employer in employers on jobs.EmployersId equals employer.EmployersId
                         select new JobQueries
                         {
@@ -527,8 +525,7 @@ namespace job_search_be.Application.Service
                             CompanyLogo = employer.CompanyLogo,
                             CompanyName = employer.CompanyName,
                             JobDescription = jobs.JobDescription,
-                            Favoufite_Job_Id=favourite.Favoufite_Job_Id,
-                            IsFavoufite_Job=favourite.IsFavoufite_Job
+                           Job_SeekerId=id
                         };
 
             if (!string.IsNullOrEmpty(queryByHome.keyword))

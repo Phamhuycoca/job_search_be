@@ -40,6 +40,7 @@ namespace job_search_be.Application.Module
             services.AddScoped<IJob_SeekerService, Job_SeekerService>();
             services.AddScoped<IRecruitmentService, RecruitmentService>();
             services.AddScoped<IFileCvService, FileCvService>();
+            services.AddScoped<IFavouriteJobService, FavouriteJobService>();
             return services;
         }
     }
