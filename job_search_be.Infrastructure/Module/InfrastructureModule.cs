@@ -36,6 +36,7 @@ namespace job_search_be.Infrastructure.Module
             services.AddScoped<IRecruitmentRepository, RecruitmentRepository>();
             services.AddScoped<IFileCvRepository, FileCvRepository>();
             services.AddScoped<IFavoufite_JobRepository, Favoufite_JobRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
             return services;
         }
     }

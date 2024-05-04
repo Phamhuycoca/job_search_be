@@ -25,6 +25,7 @@ namespace job_search_be.Domain.Entity
         public virtual ICollection<Recruitment>? Recruitments { get; set; }
         public virtual ICollection<FileCv>? FileCvs { get; set; }
         public virtual ICollection<Favoufite_Job>? Favoufite_Jobs { get; set; }
+        public virtual ICollection<Notification>? Notifications { get; set; }
 
         public Job_Seeker()
         {

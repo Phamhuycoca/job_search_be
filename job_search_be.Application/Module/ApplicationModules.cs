@@ -41,6 +41,7 @@ namespace job_search_be.Application.Module
             services.AddScoped<IRecruitmentService, RecruitmentService>();
             services.AddScoped<IFileCvService, FileCvService>();
             services.AddScoped<IFavouriteJobService, FavouriteJobService>();
+            services.AddScoped<INotificationService, NotificationService>();
             return services;
         }
     }

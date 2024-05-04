@@ -8,6 +8,7 @@ using job_search_be.Domain.Dto.Formofwork;
 using job_search_be.Domain.Dto.Job;
 using job_search_be.Domain.Dto.Job_Seeker;
 using job_search_be.Domain.Dto.Levelwork;
+using job_search_be.Domain.Dto.Notification;
 using job_search_be.Domain.Dto.Permission;
 using job_search_be.Domain.Dto.Profession;
 using job_search_be.Domain.Dto.Recruitment;
@@ -91,6 +92,9 @@ namespace job_search_be.Domain.Mapping
             CreateMap<FileCv,FileCvQuery>().ReverseMap();
 
             CreateMap<Favoufite_Job,FavouriteJobDto>().ReverseMap();
+
+            CreateMap<Notification, NotificationDto>().ReverseMap();
+            CreateMap<Notification, NotificationQuery>().ReverseMap();
 
         }
     }

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace job_search_be.Domain.Entity
+namespace job_search_be.Domain.Dto.Notification
 {
-    public class Notification:BaseEntity
+    public class NotificationQuery:BaseEntity
     {
         public Guid NotificationId { get; set; }
         public Guid Job_SeekerId { get; set; }
@@ -15,12 +15,5 @@ namespace job_search_be.Domain.Entity
         public string? Message { get; set; }
         public bool IsRead { get; set; }
         public DateTime Notification_CreatedAt { get; set; }
-        public Job_Seeker? Job_Seeker { get; set; }
-        public Employers? Employers { get; set; }
-        public Notification() 
-        {
-            IsRead = false;
-            createdAt = DateTime.Today.AddDays(1).AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
-        }
     }
 }
