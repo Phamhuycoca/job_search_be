@@ -1,4 +1,5 @@
 ﻿using CloudinaryDotNet;
+using job_search_be.Api.Hubs;
 using job_search_be.Api.Infrastructure.Extensions;
 using job_search_be.Application.Helpers;
 using job_search_be.Application.Module;
@@ -74,7 +75,8 @@ builder.Services.AddAuthorization();
 //ConnectStrings
 builder.Services.AddDbContext<job_search_DbContext>(option =>
 option.UseSqlServer(builder.Configuration.GetConnectionString("job_Context")));
-
+// Configure SignalR
+builder.Services.AddSignalR();
 //Cloudinary
 IConfiguration configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -94,6 +96,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseRouting();
 app.UseHttpsRedirection();
 app.UseFileServer();
 app.UseStaticFiles();
@@ -102,11 +105,17 @@ app.UseAuthentication();
 app.UseCors(builder =>
 {
     builder
-        .AllowAnyOrigin()
+        .WithOrigins("http://localhost:5173")
         .AllowAnyMethod()
-        .AllowAnyHeader();
+        .AllowAnyHeader()
+        .AllowCredentials(); // Cho phép sử dụng thông tin xác thực (credentials)
 });
+
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<NotificationHub>("/notificationHub");
+
+
+
 
 app.Run();
