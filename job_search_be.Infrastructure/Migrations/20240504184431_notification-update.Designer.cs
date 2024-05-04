@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using job_search_be.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using job_search_be.Infrastructure.Context;
 namespace job_search_be.Infrastructure.Migrations
 {
     [DbContext(typeof(job_search_DbContext))]
-    partial class job_search_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240504184431_notification-update")]
+    partial class notificationupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -150,6 +150,7 @@ namespace job_search_be.Infrastructure.Context
                 e.HasKey(e => e.NotificationId);
                 e.HasOne(e => e.Job_Seeker).WithMany(e => e.Notifications).HasForeignKey(e => e.Job_SeekerId).OnDelete(DeleteBehavior.ClientSetNull);
                 e.HasOne(e => e.Employers).WithMany(e => e.Notifications).HasForeignKey(e => e.EmployersId).OnDelete(DeleteBehavior.ClientSetNull);
+                e.HasOne(e => e.Job).WithMany(e => e.Notifications).HasForeignKey(e => e.JobId).OnDelete(DeleteBehavior.ClientSetNull);
             });
          
         }

@@ -9,6 +9,7 @@ namespace job_search_be.Domain.Dto.Notification
     public class NotificationDto
     {
         public Guid NotificationId { get; set; }
+        public Guid JobId { get; set; }
         public Guid Job_SeekerId { get; set; }
         public Guid EmployersId { get; set; }
         public string? Message { get; set; }

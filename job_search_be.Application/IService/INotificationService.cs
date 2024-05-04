@@ -12,8 +12,8 @@ namespace job_search_be.Application.IService
 {
     public interface INotificationService
     {
-        PagedDataResponse<NotificationQuery> Items(CommonListQuery commonList);
-        DataResponse<List<NotificationQuery>> ItemsList();
+        PagedDataResponse<NotificationQuery> Items(CommonListQuery commonList,Guid id);
+        DataResponse<List<NotificationDto>> ItemsList();
         DataResponse<NotificationQuery> Create(NotificationDto dto);
         DataResponse<NotificationQuery> Update(NotificationDto dto);
         DataResponse<NotificationQuery> Delete(Guid id);
